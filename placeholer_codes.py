@@ -25,3 +25,4 @@ paramedics_list = []
                 assistants_list.append((assistant_name, assistant_obj))
         random.shuffle(paramedics_list)
         random.shuffle(assistants_list)
+

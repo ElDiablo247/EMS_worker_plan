@@ -117,3 +117,5 @@ class Month:
         for key, value in self.days.items():
             day_object = value
             day_object.show_shifts()
+
+

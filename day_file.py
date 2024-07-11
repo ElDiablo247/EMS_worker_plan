@@ -44,3 +44,5 @@ class Day_Class:
         print(self.unavailable)
 
     #def replace_worker(self, previous: str, new: str):
+
+
