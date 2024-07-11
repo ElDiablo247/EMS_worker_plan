@@ -1,0 +1,9 @@
+Index,Name,Function,Status
+1,Emma White,Assistant,True
+2,Matthew Wilson,Assistant,True
+3,Ava Anderson,Assistant,True
+4,James Jackson,Assistant,True
+5,Isabella Harris,Assistant,True
+6,Andrew Thompson,Assistant,True
+7,Mia Clark,Assistant,True
+8,Mathew Blade,Assistant,False
