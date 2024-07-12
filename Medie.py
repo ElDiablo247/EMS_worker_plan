@@ -3,7 +3,6 @@ import random
 from worker_file import Worker
 from calendar_file import Calendar
 
-
 class Medie:
     """
     Description: Class Medie contains and manipulates the general data of the program. This is the main Class of the
@@ -43,6 +42,7 @@ class Medie:
         self.calendars = dict()
         self.paramedics = dict()
         self.assistants = dict()
+        self.unavailable = dict()
         self.populate()
 
     def get_name(self):
@@ -77,6 +77,16 @@ class Medie:
             row = [name, function, status]
             assistants.append(row)
         for row in assistants:
+            print(row)
+        print("")
+        unavailable = ["Unavailable workers\n"]
+        for key, worker_object in self.unavailable.items():
+            name = key
+            function = worker_object.get_function()
+            status = worker_object.get_availability_status()
+            row = [name, function, status]
+            unavailable.append(row)
+        for row in unavailable:
             print(row)
         print("")
 
@@ -167,7 +177,7 @@ class Medie:
                 writer.writerow([index, name, worker.get_function(), worker.get_availability_status()])
                 index += 1
         print("Backend Updated. New context: \n")
-        self.show_workers_txt()
+        self.populate()
 
     def populate(self):
         """
@@ -191,7 +201,10 @@ class Medie:
                 availability = row[3]
                 availability_status = availability.lower() == 'true'
                 paramedic = Worker(name, function, availability_status)
-                self.paramedics[paramedic.get_name()] = paramedic
+                if paramedic.get_availability_status():
+                    self.paramedics[paramedic.get_name()] = paramedic
+                else:
+                    self.unavailable[paramedic.get_name()] = paramedic
         with open('Assistants.txt', 'r') as file:
             reader2 = csv.reader(file)
             next(reader2)
@@ -201,7 +214,10 @@ class Medie:
                 availability = row[3]
                 availability_status = availability.lower() == 'true'
                 assistant = Worker(name, function, availability_status)
-                self.assistants[assistant.get_name()] = assistant
+                if assistant.get_availability_status():
+                    self.assistants[assistant.get_name()] = assistant
+                else:
+                    self.unavailable[assistant.get_name()] = assistant
         self.get_workers()
 
     def show_workers_txt(self):
@@ -335,5 +351,7 @@ class Medie:
         local_month: object = local_calendar.months[month_number]
         local_day: object = local_month.days[day_number]
         return local_day
+
+
 
 
