@@ -30,11 +30,15 @@ class Day_Class:
         name = calendar.day_name[day_index]
         self.day_name = name
 
+
     def show_shifts(self):
         print(str(self.number) + "." + str(self.month) + "." + str(self.year) + ":")
         for key, value in self.shifts.items():
             list_pair = value
-            print(key + ": " + list_pair[0][0] + " - " + list_pair[1][0])
+            if value is not None:
+                print(key + ": " + list_pair[0][0] + " - " + list_pair[1][0])
+            else:
+                print(key + ": " + "None")
         print("")
 
     def show_rest(self):

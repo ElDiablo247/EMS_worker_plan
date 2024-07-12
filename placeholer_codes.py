@@ -1,18 +1,8 @@
-def assign_day_shift(self, day: int, month: int, year: int):
-    year_local = self.calendars[year]
-    month_local = year_local.months[month]
-    day_local = month_local.days[day]
-    result = self.assign_workers()
-    day_local.shifts = result[0]
-    self.show_day_plan(day, month, year)
 
-
-
-paramedics_list = []
-        assistants_list = []
-        main_pairs = dict()
+    def filter_unavailable_workers(self) -> list:
         unavailable_workers = []
-        #filter the paramedics and assistants for workers that are not available
+        paramedics_list = []
+        assistants_list = []
         for paramedic_name, paramedic_obj in self.paramedics.items():
             if not paramedic_obj.get_availability_status():
                 unavailable_workers.append((paramedic_name, paramedic_obj))
@@ -25,4 +15,26 @@ paramedics_list = []
                 assistants_list.append((assistant_name, assistant_obj))
         random.shuffle(paramedics_list)
         random.shuffle(assistants_list)
+        result = [unavailable_workers, paramedics_list, assistants_list]
+        return result
 
+    def assign_month_shifts(self, month_number: int, year_number: int):
+        local_month = self.access_month(month_number, year_number)
+        monday = None
+        days_items = list(local_month.days.items())
+        # Check if the first day is a weekday and initialize the plan if needed
+        first_day_name = days_items[0][1].get_day_name()
+        if first_day_name not in ["Saturday", "Sunday"]:
+            monday = self.assign_workers()
+        for day, day_obj in local_month.days.items():
+            if day_obj.get_day_name() == "Saturday":
+                continue
+            elif day_obj.get_day_name() == "Sunday":
+                monday = self.assign_workers()
+            else:
+                if monday:
+                    day_obj.shifts = monday[0]
+                    day_obj.rest = monday[1]
+                    day_obj.unavailable = monday[2]
+                else:
+                    print("Wrong")

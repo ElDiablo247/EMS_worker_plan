@@ -1,7 +1,9 @@
+import calendar
 import csv
 import random
 from worker_file import Worker
 from calendar_file import Calendar
+
 
 class Medie:
     """
@@ -264,26 +266,7 @@ class Medie:
         if not flag:
             print("Check again. One of the inputs for the date is wrong.")
 
-    def filter_unavailable_workers(self) -> list:
-        unavailable_workers = []
-        paramedics_list = []
-        assistants_list = []
-        for paramedic_name, paramedic_obj in self.paramedics.items():
-            if not paramedic_obj.get_availability_status():
-                unavailable_workers.append((paramedic_name, paramedic_obj))
-            else:
-                paramedics_list.append((paramedic_name, paramedic_obj))
-        for assistant_name, assistant_obj in self.assistants.items():
-            if not assistant_obj.get_availability_status():
-                unavailable_workers.append((assistant_name, assistant_obj))
-            else:
-                assistants_list.append((assistant_name, assistant_obj))
-        random.shuffle(paramedics_list)
-        random.shuffle(assistants_list)
-        result = [unavailable_workers, paramedics_list, assistants_list]
-        return result
-
-    def assign_workers(self):
+    def assign_week(self) -> list:
         """
         Description: This function returns a list of 3 items containing a dictionary, a list and another list. The
         dictionary has keys which are the shifts of string type, and values are list of tuple pairs representing the
@@ -297,49 +280,49 @@ class Medie:
         Returns: result - Type: list - A list that contains 3 items. A dictionary, a list and a list (read description)
 
         """
-        #make as many paramedic-assistants pairs as the number of shifts, or if not enough workers then leave it empty.
-        plan_dictionary = dict()
-        filtered = self.filter_unavailable_workers()
-        unavailable = filtered[0]
-        filtered_paramedics = filtered[1]
-        filtered_assistants = filtered[2]
+        #make a plan for the week of paramedics and assistants assigned to the daily shifts
+        weekly_plan = dict()
+        paramedics = list(self.paramedics.items())
+        assistants = list(self.assistants.items())
+        random.shuffle(paramedics)
+        random.shuffle(assistants)
         shifts_nr = self.nr_of_shifts
-        for i in range(shifts_nr):
-            if len(filtered_paramedics) != 0:
-                local_paramedic = filtered_paramedics.pop()
+        for reps in range(shifts_nr):
+            if len(paramedics) != 0:
+                local_paramedic = paramedics.pop()
             else:
                 local_paramedic = ("None", None)
-            if len(filtered_assistants) != 0:
-                local_assistant = filtered_assistants.pop()
+            if len(assistants) != 0:
+                local_assistant = assistants.pop()
             else:
                 local_assistant = ("None", None)
             pair = [local_paramedic, local_assistant]
-            local_shift = "K" + str(i + 1)
-            plan_dictionary[local_shift] = pair
-        rest_list = filtered_paramedics + filtered_assistants
-        result = [plan_dictionary, rest_list, unavailable]
+            local_shift = "K" + str(reps + 1)
+            weekly_plan[local_shift] = pair
+        rest = paramedics + assistants
+        result = [weekly_plan, rest]
         return result
 
     def assign_month_shifts(self, month_number: int, year_number: int):
-        local_month = self.access_month(month_number, year_number)
-        monday = None
-        days_items = list(local_month.days.items())
-        # Check if the first day is a weekday and initialize the plan if needed
-        first_day_name = days_items[0][1].get_day_name()
-        if first_day_name not in ["Saturday", "Sunday"]:
-            monday = self.assign_workers()
-        for day, day_obj in local_month.days.items():
-            if day_obj.get_day_name() == "Saturday":
-                continue
-            elif day_obj.get_day_name() == "Sunday":
-                monday = self.assign_workers()
-            else:
-                if monday:
-                    day_obj.shifts = monday[0]
-                    day_obj.rest = monday[1]
-                    day_obj.unavailable = monday[2]
+        weeks_of_month = calendar.monthcalendar(year_number, month_number)
+        for week in weeks_of_month:
+            week_plan = self.assign_week()
+            for day in week:
+                if day != 0:
+                    day_object = self.access_day(day, month_number, year_number)
+                    if day_object.get_day_name() == "Saturday" or day_object.get_day_name() == "Sunday":
+                        day_object.shifts["K1"] = None
+                        day_object.shifts["K2"] = None
+                        continue
+                    else:
+                        day_object.shifts = week_plan[0]
+                        day_object.rest = week_plan[1]
                 else:
-                    print("Wrong")
+                    continue
+
+    def assign_manually(self, day: int, month: int, year: int, shift: str):
+        local_day = self.access_day(day, month, year)
+        local_day
 
     def access_month(self, month_number: int, year_number: int) -> object:
         local_calendar: Calendar = self.calendars[year_number]
@@ -351,7 +334,3 @@ class Medie:
         local_month: object = local_calendar.months[month_number]
         local_day: object = local_month.days[day_number]
         return local_day
-
-
-
-
