@@ -57,6 +57,20 @@ class Medie:
         for key, value in self.calendars.items():
             return key
 
+    def get_paramedic(self, paramedic_name: str):
+        if paramedic_name in self.paramedics:
+            return self.paramedics[paramedic_name]
+
+    def get_assistant(self, assistant_name: str):
+        if assistant_name in self.assistants:
+            return self.assistants[assistant_name]
+
+    def get_paramedics(self):
+        return self.paramedics
+
+    def get_assistants(self):
+        return self.assistants
+
     def change_nr_of_shifts(self, new_number: int):
         self.nr_of_shifts = new_number
 
@@ -280,27 +294,27 @@ class Medie:
         Returns: result - Type: list - A list that contains 3 items. A dictionary, a list and a list (read description)
 
         """
-        #make a plan for the week of paramedics and assistants assigned to the daily shifts
-        weekly_plan = dict()
-        paramedics = list(self.paramedics.items())
-        assistants = list(self.assistants.items())
-        random.shuffle(paramedics)
-        random.shuffle(assistants)
-        shifts_nr = self.nr_of_shifts
-        for reps in range(shifts_nr):
-            if len(paramedics) != 0:
-                local_paramedic = paramedics.pop()
+        #make a plan for a whole week of paramedics and assistants assigned to the daily shifts.
+        local_weekly_plan = dict()
+        local_paramedics = list(self.paramedics.items())
+        local_assistants = list(self.assistants.items())
+        random.shuffle(local_paramedics)
+        random.shuffle(local_assistants)
+        local_shifts_nr = self.nr_of_shifts
+        for reps in range(local_shifts_nr):
+            if len(local_paramedics) != 0:
+                local_paramedic = local_paramedics.pop()
             else:
                 local_paramedic = ("None", None)
-            if len(assistants) != 0:
-                local_assistant = assistants.pop()
+            if len(local_assistants) != 0:
+                local_assistant = local_assistants.pop()
             else:
                 local_assistant = ("None", None)
-            pair = [local_paramedic, local_assistant]
+            local_pair = [local_paramedic, local_assistant]
             local_shift = "K" + str(reps + 1)
-            weekly_plan[local_shift] = pair
-        rest = paramedics + assistants
-        result = [weekly_plan, rest]
+            local_weekly_plan[local_shift] = local_pair
+        rest = local_paramedics + local_assistants
+        result = [local_weekly_plan, rest]
         return result
 
     def assign_month_shifts(self, month_number: int, year_number: int):
@@ -320,9 +334,18 @@ class Medie:
                 else:
                     continue
 
-    def assign_manually(self, day: int, month: int, year: int, shift: str):
+    def assign_manually(self, day: int, month: int, year: int, shift: str, pair: list):
         local_day = self.access_day(day, month, year)
-        local_day
+        if shift in local_day.shifts:
+            local_day.shifts[shift] = pair
+        else:
+            print("Fuck")
+
+    def create_pair(self, new_paramedic: str, new_assistant: str) -> list:
+        paramedic_tuple = (new_paramedic, self.get_paramedic(new_paramedic))
+        assistant_tuple = (new_assistant, self.get_assistant(new_assistant))
+        pair = [paramedic_tuple, assistant_tuple]
+        return pair
 
     def access_month(self, month_number: int, year_number: int) -> object:
         local_calendar: Calendar = self.calendars[year_number]
