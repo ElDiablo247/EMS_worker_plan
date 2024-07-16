@@ -261,24 +261,24 @@ class Medie:
                 print(row[1] + ", " + row[2])
 
     def show_month_plan(self, month: int, year: int):
-        if year in self.calendars:
-            year_local = self.calendars[year]
-            if month in year_local.months:
-                month_local = year_local.months[month]
-                month_local.show_days()
+        if year not in self.calendars:
+            raise KeyError("The year entered does not exist.")
+        if month not in self.calendars[year].months:
+            raise KeyError("The month entered does not exist.")
+
+        month_local = self.calendars[year].months[month]
+        month_local.show_days()
 
     def show_day_plan(self, day: int, month: int, year: int):
-        flag = False
-        if year in self.calendars:
-            year_local = self.calendars[year]
-            if month in year_local.months:
-                month_local = year_local.months[month]
-                if day in month_local.days:
-                    day_local = month_local.days[day]
-                    day_local.show_shifts()
-                    flag = True
-        if not flag:
-            print("Check again. One of the inputs for the date is wrong.")
+        if year not in self.calendars:
+            raise KeyError("Year does not exist.")
+        if month not in self.calendars[year].months:
+            raise KeyError("Month does not exist.")
+        if day not in self.calendars[year].months[month].days:
+            raise KeyError("Day does not exist.")
+
+        day_local = self.calendars[year].months[month].days[day]
+        day_local.show_shifts()
 
     def assign_week(self) -> list:
         """
@@ -318,42 +318,61 @@ class Medie:
         return result
 
     def assign_month_shifts(self, month_number: int, year_number: int):
+        if year_number not in self.calendars:
+            raise KeyError("The year entered does not exist.")
+        if month_number not in self.calendars[year_number].months:
+            raise KeyError("The month entered does not exist.")
+
         weeks_of_month = calendar.monthcalendar(year_number, month_number)
         for week in weeks_of_month:
             week_plan = self.assign_week()
             for day in week:
                 if day != 0:
                     day_object = self.access_day(day, month_number, year_number)
-                    if day_object.get_day_name() == "Saturday" or day_object.get_day_name() == "Sunday":
+                    if day_object is None:
+                        # access_day already printed the error message, so we just return here
+                        return
+                    if day_object.get_day_name() in ["Saturday", "Sunday"]:
                         day_object.shifts["K1"] = None
                         day_object.shifts["K2"] = None
-                        continue
                     else:
                         day_object.shifts = week_plan[0]
                         day_object.rest = week_plan[1]
-                else:
-                    continue
+        self.show_month_plan(month_number, year_number)
 
     def assign_manually(self, day: int, month: int, year: int, shift: str, pair: list):
         local_day = self.access_day(day, month, year)
-        if shift in local_day.shifts:
-            local_day.shifts[shift] = pair
-        else:
-            print("Fuck")
+        if shift not in local_day.shifts:
+            raise KeyError("Shift does not exist, or has not been created yet. Try again.")
+
+        local_day.shifts[shift] = pair
+        print("Showing the change:")
+        local_day.show_shifts()
 
     def create_pair(self, new_paramedic: str, new_assistant: str) -> list:
+        if new_paramedic not in self.paramedics:
+            raise KeyError("Paramedic does not exist. Try again")
+        if new_assistant not in self.assistants:
+            raise KeyError("Assistant does not exist. Try again")
+
         paramedic_tuple = (new_paramedic, self.get_paramedic(new_paramedic))
         assistant_tuple = (new_assistant, self.get_assistant(new_assistant))
-        pair = [paramedic_tuple, assistant_tuple]
-        return pair
+        return [paramedic_tuple, assistant_tuple]
 
     def access_month(self, month_number: int, year_number: int) -> object:
-        local_calendar: Calendar = self.calendars[year_number]
-        local_month: object = local_calendar.months[month_number]
-        return local_month
+        if year_number not in self.calendars:
+            raise KeyError("Year does not exist. Try again")
+        if month_number not in self.calendars[year_number].months:
+            raise KeyError("Month does not exist. Try again")
+
+        return self.calendars[year_number].months[month_number]
 
     def access_day(self, day_number: int, month_number: int, year_number: int) -> object:
-        local_calendar: Calendar = self.calendars[year_number]
-        local_month: object = local_calendar.months[month_number]
-        local_day: object = local_month.days[day_number]
-        return local_day
+        if year_number not in self.calendars:
+            raise KeyError("Year does not exist.")
+        if month_number not in self.calendars[year_number].months:
+            raise KeyError("Month does not exist.")
+        if day_number not in self.calendars[year_number].months[month_number].days:
+            raise KeyError("Day does not exist.")
+
+        return self.calendars[year_number].months[month_number].days[day_number]
