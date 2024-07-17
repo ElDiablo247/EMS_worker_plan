@@ -1,23 +1,7 @@
-each worker has more attibutes like:
-
-a list of max. 2 coworkers they prefer to work with
-a list of max. 2 coworkers they hate
-a list of days they prefer to work
-a list of days they hate to work
-previous colleague pairings
-
-months is going to be a class and calendar class will store string-month obj pairs in a dict.
-
-
 VERY IMPORTANT: CHANGE ERROR HANDLING: PRINT STATEMENTS ARE NOT ENOUGH: WE NEED VALUEERROR ERROR HANDLING: CHATGPT CAN GUIDE ME
 
-Use panda to change the way the workers and shifts information are shown to the user (show_workers). with panda they will be shown in a tabular form like this
+Months objects must have an attribute to store the plan of the whole month even if it is something simple so that it can be shown
+to workers. Each time a change happens, the change is updated in the attribute. Also a function is needed to update backend when called.
 
-Metric	Visa (Q2 2024)	Mastercard (Q2 2024)	American Express (Q2 2024)
-Revenue (Billion USD)	8.12	6.27	14.01
-Net Income (Billion USD)	4.22	2.65	3.19
-Gross Margin (%)	81.54	80.25	78.45
-Operating Margin (%)	65.30	59.42	30.21
-Net Profit Margin (%)	51.98	42.27	22.76
-EPS (USD)	1.98	2.89	2.58
-Market Cap (Billion USD)	488.35	362.10	119.45
+SUGGESTIONS: Days are keys and values are K1: (worker1, worker2) , K2: (worker1, worker2) so also dictionaries, OR
+days are keys and the values are ("K3: Raul - May") so tuple containing string
