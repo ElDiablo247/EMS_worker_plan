@@ -45,7 +45,7 @@ class Medie:
         self.paramedics = dict()
         self.assistants = dict()
         self.unavailable = dict()
-        self.populate()
+        self.populate_workers()
 
     def get_name(self):
         return self.name
@@ -165,7 +165,7 @@ class Medie:
         else:
             print("Worker ", name, " not found in paramedics or assistants.")
 
-    def update_backend(self):
+    def update_workers_backend(self):
         """
         Description: Changes that are made to the data of the Medie class (all the dictionaries containing workers)
         are also updated to the backend which is a simple text file for simplicity reasons.
@@ -195,7 +195,7 @@ class Medie:
         print("Backend Updated. New context: \n")
         self.populate()
 
-    def populate(self):
+    def populate_workers(self):
         """
         Description: This function is only called from the constructor method once an instance of Medie is created.
         Its purpose is to load the data from the backend, to the storage of the program itself (dictionary

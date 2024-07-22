@@ -30,7 +30,6 @@ class Day_Class:
         name = calendar.day_name[day_index]
         self.day_name = name
 
-
     def show_shifts(self):
         print(str(self.number) + "." + str(self.month) + "." + str(self.year) + ":")
         for key, value in self.shifts.items():
@@ -46,7 +45,3 @@ class Day_Class:
 
     def show_unavailable(self):
         print(self.unavailable)
-
-    #def replace_worker(self, previous: str, new: str):
-
-

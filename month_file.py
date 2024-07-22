@@ -1,3 +1,4 @@
+import os
 from day_file import *
 
 
@@ -49,7 +50,8 @@ class Month:
         self.name = ""
         self.assign_month_name()
         self.days = dict()
-        self.populate_month_calendar()
+        self.populate_days()
+        self.month_plan = dict()
 
     def get_name(self):
         """
@@ -90,13 +92,13 @@ class Month:
         if number not in months_dict:
             print("Error in the input of the month's number.  " + str(number) + " is not a valid number.")
         else:
-            return months_dict[number]
+            self.name = months_dict[number]
 
     def assign_number_of_days(self):
         local = calendar.monthrange(self.get_year(), self.get_month_number())[1]
         self.number_of_days = local
 
-    def populate_month_calendar(self):
+    def populate_days(self):
         """
         Description: This function populates the days dictionary attribute with all the day numbers (1 - 30 for example)
         and each number is an empty key (no values yet)
@@ -118,4 +120,19 @@ class Month:
             day_object = value
             day_object.show_shifts()
 
+    def populate_month_plan(self):
+        for day, day_object in self.days.items():
+            if day not in self.month_plan:
+                self.month_plan[day] = {}
+            for shift, pair in day_object.shifts.items():
+                if pair is not None:
+                    self.month_plan[day][shift] = (pair[0][0], pair[1][0])
+                else:
+                    self.month_plan[day][shift] = "None"
+        self.show_month_plan()
 
+    def show_month_plan(self):
+        for key, value in self.month_plan.items():
+            print(str(key) + " of " + self.get_name())
+            for mix, dix in value.items():
+                print(mix + " -", dix)
