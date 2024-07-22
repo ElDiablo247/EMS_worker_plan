@@ -1,8 +1,7 @@
-import calendar
 import csv
-import random
 from worker_file import Worker
 from calendar_file import Calendar
+from plan_creator import assign_month_shifts, assign_week
 
 
 class Medie:
@@ -36,7 +35,9 @@ class Medie:
             4. nr_of_shifts - Type: integer - This is the number of different shifts this medie object has
             5. calendars - Type: dict - This is a dictionary containing the calendars with the plan of the whole year
 
-        Function calls: None
+        Function calls:
+
+            1. populate_workers() - Loads the workers from the backend, to the program's memory.
 
         """
         self.name = name
@@ -260,15 +261,6 @@ class Medie:
             for row in reader:
                 print(row[1] + ", " + row[2])
 
-    def show_month_plan(self, month: int, year: int):
-        if year not in self.calendars:
-            raise KeyError("The year entered does not exist.")
-        if month not in self.calendars[year].months:
-            raise KeyError("The month entered does not exist.")
-
-        month_local = self.calendars[year].months[month]
-        month_local.show_days()
-
     def show_day_plan(self, day: int, month: int, year: int):
         if year not in self.calendars:
             raise KeyError("Year does not exist.")
@@ -280,76 +272,10 @@ class Medie:
         day_local = self.calendars[year].months[month].days[day]
         day_local.show_shifts()
 
-    def assign_week(self) -> list:
-        """
-        Description: This function returns a list of 3 items containing a dictionary, a list and another list. The
-        dictionary has keys which are the shifts of string type, and values are list of tuple pairs representing the
-        pairs of workers assigned to the shift like this {"K3": [("worker name", worker_object),("worker name",
-        worker_object)]}. The first list is a list of tuples that has string - worker_object pairs representing the
-        workers that have remained to be manually assigned. The last list contains tuples of string - worker_object
-        pairs that represent the unavailable workers.
-
-        Args: None
-
-        Returns: result - Type: list - A list that contains 3 items. A dictionary, a list and a list (read description)
-
-        """
-        #make a plan for a whole week of paramedics and assistants assigned to the daily shifts.
-        local_weekly_plan = dict()
-        local_paramedics = list(self.paramedics.items())
-        local_assistants = list(self.assistants.items())
-        random.shuffle(local_paramedics)
-        random.shuffle(local_assistants)
-        local_shifts_nr = self.nr_of_shifts
-        for reps in range(local_shifts_nr):
-            if len(local_paramedics) != 0:
-                local_paramedic = local_paramedics.pop()
-            else:
-                local_paramedic = ("None", None)
-            if len(local_assistants) != 0:
-                local_assistant = local_assistants.pop()
-            else:
-                local_assistant = ("None", None)
-            local_pair = [local_paramedic, local_assistant]
-            local_shift = "K" + str(reps + 1)
-            local_weekly_plan[local_shift] = local_pair
-        rest = local_paramedics + local_assistants
-        result = [local_weekly_plan, rest]
-        return result
-
-    def assign_month_shifts(self, month_number: int, year_number: int):
-        if year_number not in self.calendars:
-            raise KeyError("The year entered does not exist.")
-        if month_number not in self.calendars[year_number].months:
-            raise KeyError("The month entered does not exist.")
-
-        weeks_of_month = calendar.monthcalendar(year_number, month_number)
-        for week in weeks_of_month:
-            week_plan = self.assign_week()
-            for day in week:
-                if day != 0:
-                    day_object = self.access_day(day, month_number, year_number)
-                    if day_object is None:
-                        # access_day already printed the error message, so we just return here
-                        return
-                    if day_object.get_day_name() in ["Saturday", "Sunday"]:
-                        day_object.shifts["K1"] = None
-                        day_object.shifts["K2"] = None
-                    else:
-                        day_object.shifts = week_plan[0]
-                        day_object.rest = week_plan[1]
-        self.show_month_plan(month_number, year_number)
-
-    def assign_manually(self, day: int, month: int, year: int, shift: str, pair: list):
+    def assign_manually(self, day: int, month: int, year: int, shift: str, new_paramedic: str, new_assistant: str):
         local_day = self.access_day(day, month, year)
         if shift not in local_day.shifts:
             raise KeyError("Shift does not exist, or has not been created yet. Try again.")
-
-        local_day.shifts[shift] = pair
-        print("Showing the change:")
-        local_day.show_shifts()
-
-    def create_pair(self, new_paramedic: str, new_assistant: str) -> list:
         if new_paramedic not in self.paramedics:
             raise KeyError("Paramedic does not exist. Try again")
         if new_assistant not in self.assistants:
@@ -357,7 +283,10 @@ class Medie:
 
         paramedic_tuple = (new_paramedic, self.get_paramedic(new_paramedic))
         assistant_tuple = (new_assistant, self.get_assistant(new_assistant))
-        return [paramedic_tuple, assistant_tuple]
+        pair = [paramedic_tuple, assistant_tuple]
+        local_day.shifts[shift] = pair
+        print("Showing the change:")
+        local_day.show_shifts()
 
     def access_month(self, month_number: int, year_number: int) -> object:
         if year_number not in self.calendars:
@@ -376,3 +305,9 @@ class Medie:
             raise KeyError("Day does not exist.")
 
         return self.calendars[year_number].months[month_number].days[day_number]
+
+    def assign_month_shifts(self, month_number: int, year_number: int):
+        return assign_month_shifts(self, month_number, year_number)
+
+    def assign_week(self) -> list:
+        return assign_week(self)

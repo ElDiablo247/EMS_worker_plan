@@ -36,7 +36,7 @@ class Calendar:
         self.year = year
         self.name = str(year) + " Calendar"
         self.months = dict()
-        self.populate_calendar_folder()
+        self.populate_months()
         self.create_calendar_folder()
 
     def get_name(self):
@@ -49,7 +49,7 @@ class Calendar:
         for key in self.months:
             print(key)
 
-    def populate_calendar_folder(self):
+    def populate_months(self):
         months_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         for month in months_list:
             self.months[month] = Month(month, self.get_year())
@@ -64,20 +64,22 @@ class Calendar:
         else:
             print(f"Folder already exists: {folder_name}")
 
+        # Create txt files for each month of the year
         for key, value in self.months.items():
             local_name = value.get_name()
-            csv_filename = os.path.join(folder_name, f"{local_name}.csv")
+            txt_filename = os.path.join(folder_name, f"{local_name}.txt")
 
-            # Check if the CSV file already exists
-            if not os.path.exists(csv_filename):
+            # Check if the .txt file already exists
+            if not os.path.exists(txt_filename):
                 try:
-                    # Create an empty CSV file if it does not exist
-                    with open(csv_filename, mode='w', newline='') as file:
-                        # No content is written to the file; it's empty
+                    with open(txt_filename, mode='w') as file:
                         pass
-                    print(f"Empty CSV file created: {csv_filename}")
+                    print(f"Empty .txt file created: {txt_filename}")
+                except IOError as e:
+                    # Raise an IOError if there is an issue with file operations
+                    raise IOError(f"Error creating file {txt_filename}: {e}")
                 except Exception as e:
-                    print(f"Error creating file {csv_filename}: {e}")
+                    # Raise any other exceptions encountered
+                    raise RuntimeError(f"Unexpected error occurred with file {txt_filename}: {e}")
             else:
-                print(f"CSV file already exists: {csv_filename}")
-
+                print(f".txt file already exists: {txt_filename}")
