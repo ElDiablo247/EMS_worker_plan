@@ -1,4 +1,6 @@
 import csv
+import os
+import calendar
 from worker_file import Worker
 from calendar_file import Calendar
 from plan_creator import assign_month_shifts, assign_week
@@ -311,3 +313,39 @@ class Medie:
 
     def assign_week(self) -> list:
         return assign_week(self)
+
+    def load_month_backend(self, month_number: int, year: int):
+
+        if month_number < 1 or month_number > 12:
+            raise ValueError("Invalid month number")
+
+        # Get the month name from the month number
+        month_name = calendar.month_name[month_number]
+
+        file_path = os.path.join(f"{year}_Calendar", f"{month_name}.txt")
+
+        if not os.path.exists(file_path):
+            print(f"No backend file found for {month_name} {year}.")
+            return
+
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+        day_number = None
+        local_day = None  # Ensure local_day is initialized
+        for line in lines:
+            line = line.strip()
+            if line.startswith("Day:"):
+                day_number = int(line.split(":")[1].strip())
+                local_day = self.access_day(day_number, month_number, year)
+            elif line and day_number is not None and local_day is not None:
+                shift_data = line.split(":")
+                shift = shift_data[0].strip()
+                workers = shift_data[1].strip()
+                if workers == "None":
+                    local_day.shifts[shift] = None
+                else:
+                    workers_list = workers.split(", ")
+                    paramedics = [(name, self.get_paramedic(name)) for name in workers_list if name in self.paramedics]
+                    assistants = [(name, self.get_assistant(name)) for name in workers_list if name in self.assistants]
+                    local_day.shifts[shift] = paramedics + assistants

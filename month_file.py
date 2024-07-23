@@ -146,7 +146,7 @@ class Month:
                 for shift, pair in day_object.shifts.items():
                     if pair is not None:
                         workers = f"{pair[0][0]}, {pair[1][0]}"
-                        file.write(f"Shift {shift}: {workers}\n")
+                        file.write(f"{shift}: {workers}\n")
                     else:
-                        file.write(f"Shift {shift}: None\n")
+                        file.write(f"{shift}: None\n")
                 file.write("\n")

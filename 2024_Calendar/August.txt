@@ -1,62 +1,190 @@
 Day: 1
+K1: Olivia Miller, Matthew Wilson
+K2: Raul Birta, Isabella Harris
+K3: Michael Davis, Emma White
+K4: Christopher Taylor, James Jackson
+K5: Daniel Brown, Andrew Thompson
 
 Day: 2
+K1: Olivia Miller, Matthew Wilson
+K2: Raul Birta, Isabella Harris
+K3: Michael Davis, Emma White
+K4: Christopher Taylor, James Jackson
+K5: Daniel Brown, Andrew Thompson
 
 Day: 3
+K1: None
+K2: None
 
 Day: 4
+K1: None
+K2: None
 
 Day: 5
+K1: Olivia Miller, Andrew Thompson
+K2: Michael, James Jackson
+K3: Emily Johnson, Isabella Harris
+K4: Michael Davis, Mia Clark
+K5: Sophia Martinez, Matthew Wilson
 
 Day: 6
+K1: Olivia Miller, Andrew Thompson
+K2: Michael, James Jackson
+K3: Emily Johnson, Isabella Harris
+K4: Michael Davis, Mia Clark
+K5: Sophia Martinez, Matthew Wilson
 
 Day: 7
+K1: Olivia Miller, Andrew Thompson
+K2: Michael, James Jackson
+K3: Emily Johnson, Isabella Harris
+K4: Michael Davis, Mia Clark
+K5: Sophia Martinez, Matthew Wilson
 
 Day: 8
+K1: Olivia Miller, Andrew Thompson
+K2: Michael, James Jackson
+K3: Emily Johnson, Isabella Harris
+K4: Michael Davis, Mia Clark
+K5: Sophia Martinez, Matthew Wilson
 
 Day: 9
+K1: Olivia Miller, Andrew Thompson
+K2: Michael, James Jackson
+K3: Emily Johnson, Isabella Harris
+K4: Michael Davis, Mia Clark
+K5: Sophia Martinez, Matthew Wilson
 
 Day: 10
+K1: None
+K2: None
 
 Day: 11
+K1: None
+K2: None
 
 Day: 12
+K1: Michael Davis, Mia Clark
+K2: Emily Johnson, Ava Anderson
+K3: Sophia Martinez, Emma White
+K4: Daniel Brown, Isabella Harris
+K5: Michael, Andrew Thompson
 
 Day: 13
+K1: Michael Davis, Mia Clark
+K2: Emily Johnson, Ava Anderson
+K3: Sophia Martinez, Emma White
+K4: Daniel Brown, Isabella Harris
+K5: Michael, Andrew Thompson
 
 Day: 14
+K1: Michael Davis, Mia Clark
+K2: Emily Johnson, Ava Anderson
+K3: Sophia Martinez, Emma White
+K4: Daniel Brown, Isabella Harris
+K5: Michael, Andrew Thompson
 
 Day: 15
+K1: Michael Davis, Mia Clark
+K2: Emily Johnson, Ava Anderson
+K3: Sophia Martinez, Emma White
+K4: Daniel Brown, Isabella Harris
+K5: Michael, Andrew Thompson
 
 Day: 16
+K1: Michael Davis, Mia Clark
+K2: Emily Johnson, Ava Anderson
+K3: Sophia Martinez, Emma White
+K4: Daniel Brown, Isabella Harris
+K5: Michael, Andrew Thompson
 
 Day: 17
+K1: None
+K2: None
 
 Day: 18
+K1: None
+K2: None
 
 Day: 19
+K1: Raul Birta, James Jackson
+K2: Christopher Taylor, Matthew Wilson
+K3: Daniel Brown, Emma White
+K4: Michael, Mia Clark
+K5: Sarah Williams, Andrew Thompson
 
 Day: 20
+K1: Raul Birta, James Jackson
+K2: Christopher Taylor, Matthew Wilson
+K3: Daniel Brown, Emma White
+K4: Michael, Mia Clark
+K5: Sarah Williams, Andrew Thompson
 
 Day: 21
+K1: Raul Birta, James Jackson
+K2: Christopher Taylor, Matthew Wilson
+K3: Daniel Brown, Emma White
+K4: Michael, Mia Clark
+K5: Sarah Williams, Andrew Thompson
 
 Day: 22
+K1: Raul Birta, James Jackson
+K2: Christopher Taylor, Matthew Wilson
+K3: Daniel Brown, Emma White
+K4: Michael, Mia Clark
+K5: Sarah Williams, Andrew Thompson
 
 Day: 23
+K1: Raul Birta, James Jackson
+K2: Christopher Taylor, Matthew Wilson
+K3: Daniel Brown, Emma White
+K4: Michael, Mia Clark
+K5: Sarah Williams, Andrew Thompson
 
 Day: 24
+K1: None
+K2: None
 
 Day: 25
+K1: None
+K2: None
 
 Day: 26
+K1: Christopher Taylor, Emma White
+K2: Emily Johnson, Ava Anderson
+K3: Michael, Andrew Thompson
+K4: Michael Davis, Isabella Harris
+K5: Raul Birta, Mia Clark
 
 Day: 27
+K1: Christopher Taylor, Emma White
+K2: Emily Johnson, Ava Anderson
+K3: Michael, Andrew Thompson
+K4: Michael Davis, Isabella Harris
+K5: Raul Birta, Mia Clark
 
 Day: 28
+K1: Christopher Taylor, Emma White
+K2: Emily Johnson, Ava Anderson
+K3: Michael, Andrew Thompson
+K4: Michael Davis, Isabella Harris
+K5: Raul Birta, Mia Clark
 
 Day: 29
+K1: Christopher Taylor, Emma White
+K2: Emily Johnson, Ava Anderson
+K3: Michael, Andrew Thompson
+K4: Michael Davis, Isabella Harris
+K5: Raul Birta, Mia Clark
 
 Day: 30
+K1: Christopher Taylor, Emma White
+K2: Emily Johnson, Ava Anderson
+K3: Michael, Andrew Thompson
+K4: Michael Davis, Isabella Harris
+K5: Raul Birta, Mia Clark
 
 Day: 31
+K1: Emily Johnson, Emma White
+K2: Raul Birta, Mia Clark
 
