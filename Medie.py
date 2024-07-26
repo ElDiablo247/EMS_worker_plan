@@ -279,13 +279,14 @@ class Medie:
         if shift not in local_day.shifts:
             raise KeyError("Shift does not exist, or has not been created yet. Try again.")
         if new_paramedic not in self.paramedics:
-            raise KeyError("Paramedic does not exist. Try again")
+            raise KeyError("Paramedic does not exist or is unavailable. Try again")
         if new_assistant not in self.assistants:
-            raise KeyError("Assistant does not exist. Try again")
+            raise KeyError("Assistant does not exist or is unavailable. Try again")
 
         paramedic_tuple = (new_paramedic, self.get_paramedic(new_paramedic))
         assistant_tuple = (new_assistant, self.get_assistant(new_assistant))
         pair = [paramedic_tuple, assistant_tuple]
+
         local_day.shifts[shift] = pair
         print("Showing the change:")
         local_day.show_shifts()
@@ -321,7 +322,6 @@ class Medie:
 
         # Get the month name from the month number
         month_name = calendar.month_name[month_number]
-
         file_path = os.path.join(f"{year}_Calendar", f"{month_name}.txt")
 
         if not os.path.exists(file_path):

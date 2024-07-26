@@ -1,7 +1,3 @@
-VERY IMPORTANT: CHANGE ERROR HANDLING: PRINT STATEMENTS ARE NOT ENOUGH: WE NEED VALUEERROR ERROR HANDLING: CHATGPT CAN GUIDE ME
+backend of paramedics must contain more columns with their avaailability, and hours
 
-Months objects must have an attribute to store the plan of the whole month even if it is something simple so that it can be shown
-to workers. Each time a change happens, the change is updated in the attribute. Also a function is needed to update backend when called.
-
-SUGGESTIONS: Days are keys and values are K1: (worker1, worker2) , K2: (worker1, worker2) so also dictionaries, OR
-days are keys and the values are ("K3: Raul - May") so tuple containing string
+in the month backend rest and unavailable must also be saved and loaded

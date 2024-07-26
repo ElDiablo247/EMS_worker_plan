@@ -5,6 +5,4 @@ Index,Name,Function,Status
 4,Christopher Taylor,Paramedic,True
 5,Olivia Miller,Paramedic,True
 6,Daniel Brown,Paramedic,True
-7,Sophia Martinez,Paramedic,True
-8,Michael,Paramedic,True
-9,Raul Birta,Paramedic,True
+7,Raul Birta,Paramedic,True

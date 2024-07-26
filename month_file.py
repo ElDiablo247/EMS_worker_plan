@@ -35,7 +35,6 @@ class Month:
             3. number_of_days - Type: integer - The number of days in that specific month (29, 30 or 31)
             4. name - Type: string - Name of month which is set to "" so it can be assigned from a function call
             5. days - Type: dict - A dictionary where the day numbers are keys, and the values are day objects
-            6. month_work_plan - Type: dict - A dictionary containing the finished plan for the month
 
         Function calls:
             1. assign_number_of_days() - This function sets the attribute number_of_days using the calendar library
@@ -52,7 +51,6 @@ class Month:
         self.assign_month_name()
         self.days = dict()
         self.create_days_of_month()
-        self.month_work_plan = dict()
 
     def get_name(self):
         """
@@ -116,24 +114,6 @@ class Month:
             local[day] = Day_Class(day, self.get_month_number(), self.get_year())
         self.days = local
 
-    def save_month_plan(self):
-        for day, day_object in self.days.items():
-            if day not in self.month_work_plan:
-                self.month_work_plan[day] = {}
-            for shift, pair in day_object.shifts.items():
-                if pair is not None:
-                    self.month_work_plan[day][shift] = (pair[0][0], pair[1][0])
-                else:
-                    self.month_work_plan[day][shift] = "None"
-        self.show_month_plan()
-
-    def show_month_plan(self):
-        for day, shifts in self.month_work_plan.items():
-            print(str(day) + " of " + self.get_name())
-            for shift, pair in shifts.items():
-                print(shift + " -", pair)
-            print("")
-
     def show_plan_by_day(self):
         for day, day_object in self.days.items():
             day_object.show_shifts()
@@ -149,4 +129,5 @@ class Month:
                         file.write(f"{shift}: {workers}\n")
                     else:
                         file.write(f"{shift}: None\n")
+
                 file.write("\n")

@@ -18,11 +18,16 @@ def assign_week(self) -> list:
     """
     # make a plan for a whole week of paramedics and assistants assigned to the daily shifts.
     local_weekly_plan = dict()
+
+    # workers are loaded to local lists and then shuffled to be random
     local_paramedics = list(self.paramedics.items())
     local_assistants = list(self.assistants.items())
+    local_unavailable = list(self.unavailable.items())
     random.shuffle(local_paramedics)
     random.shuffle(local_assistants)
     local_shifts_nr = self.nr_of_shifts
+
+    # repeat as many times as the shifts in the specific day to make pairs of paramedics and assistants
     for reps in range(local_shifts_nr):
         if len(local_paramedics) != 0:
             local_paramedic = local_paramedics.pop()
@@ -35,8 +40,10 @@ def assign_week(self) -> list:
         local_pair = [local_paramedic, local_assistant]
         local_shift = "K" + str(reps + 1)
         local_weekly_plan[local_shift] = local_pair
+
+    # the rest of the workers (if any) that have not been assigned
     rest = local_paramedics + local_assistants
-    result = [local_weekly_plan, rest]
+    result = [local_weekly_plan, rest, local_unavailable]
     return result
 
 
@@ -72,3 +79,5 @@ def assign_month_shifts(self, month_number: int, year_number: int):
                 else:
                     day_object.shifts = week_plan[0]
                     day_object.rest = week_plan[1]
+                    day_object.unavailable = week_plan[2]
+                day_object.assign_rest()

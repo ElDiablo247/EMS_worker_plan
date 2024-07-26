@@ -30,18 +30,30 @@ class Day_Class:
         name = calendar.day_name[day_index]
         self.day_name = name
 
+    def assign_rest(self):
+        for shift, pair in self.shifts.items():
+            if len(self.rest) != 0:
+                local_worker = self.rest.pop()
+                pair.append(local_worker)
+
     def show_shifts(self):
         print(str(self.number) + "." + str(self.month) + "." + str(self.year) + ":")
         for key, value in self.shifts.items():
-            list_pair = value
+            workers_string = ""
             if value is not None:
-                print(key + ": " + list_pair[0][0] + " - " + list_pair[1][0])
+                for worker in value:
+                    workers_string += " - " + worker[0]
+                print(key + ": " + workers_string)
             else:
                 print(key + ": " + "None")
         print("")
 
     def show_rest(self):
-        print(self.rest)
+        print("These are unassigned workers:")
+        for worker in self.rest:
+            print(worker[0])
 
     def show_unavailable(self):
-        print(self.unavailable)
+        print("These are unavailable workers:")
+        for worker in self.unavailable:
+            print(worker[0])

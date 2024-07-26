@@ -4,6 +4,4 @@ Index,Name,Function,Status
 3,Ava Anderson,Assistant,True
 4,James Jackson,Assistant,True
 5,Isabella Harris,Assistant,True
-6,Andrew Thompson,Assistant,True
-7,Mia Clark,Assistant,True
-8,Mathew Blade,Assistant,False
+6,Mathew Blade,Assistant,False
