@@ -1,6 +1,6 @@
 import calendar
 import random
-
+import copy
 
 def assign_week(self) -> list:
     """
@@ -77,7 +77,7 @@ def assign_month_shifts(self, month_number: int, year_number: int):
                     day_object.shifts["K1"] = None
                     day_object.shifts["K2"] = None
                 else:
-                    day_object.shifts = week_plan[0]
-                    day_object.rest = week_plan[1]
-                    day_object.unavailable = week_plan[2]
-                day_object.assign_rest()
+                    day_object.shifts = copy.deepcopy(week_plan[0])
+                    day_object.rest = copy.deepcopy(week_plan[1])
+                    day_object.unavailable = copy.deepcopy(week_plan[2])
+                #day_object.assign_rest()
