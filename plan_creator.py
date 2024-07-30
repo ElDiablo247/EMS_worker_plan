@@ -80,4 +80,4 @@ def assign_month_shifts(self, month_number: int, year_number: int):
                     day_object.shifts = copy.deepcopy(week_plan[0])
                     day_object.rest = copy.deepcopy(week_plan[1])
                     day_object.unavailable = copy.deepcopy(week_plan[2])
-                #day_object.assign_rest()
+                day_object.assign_rest()

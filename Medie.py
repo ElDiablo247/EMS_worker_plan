@@ -349,3 +349,4 @@ class Medie:
                     paramedics = [(name, self.get_paramedic(name)) for name in workers_list if name in self.paramedics]
                     assistants = [(name, self.get_assistant(name)) for name in workers_list if name in self.assistants]
                     local_day.shifts[shift] = paramedics + assistants
+
