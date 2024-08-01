@@ -286,10 +286,75 @@ class Medie:
         paramedic_tuple = (new_paramedic, self.get_paramedic(new_paramedic))
         assistant_tuple = (new_assistant, self.get_assistant(new_assistant))
         pair = [paramedic_tuple, assistant_tuple]
-
         local_day.shifts[shift] = pair
         print("Showing the change:")
         local_day.show_shifts()
+        self.check_plan(local_day.shifts)
+
+    def check_plan(self, plan: dict):
+        flag = True
+        local_workers = dict()
+        # Check duplicates of workers
+        for shift, pair in plan.items():
+            for worker in pair:
+                if worker[0] not in local_workers:
+                    local_workers[worker[0]] = 1
+                else:
+                    flag = False
+                    local_workers[worker[0]] += 1
+                    print(worker[0] + " already exists in today's plan. Make some changes.")
+                    print("")
+
+        # Check if there are workers that have not been assigned
+        for paramedic, paramedic_obj in self.paramedics.items():
+            if paramedic not in local_workers:
+                flag = False
+                print(paramedic + " is not assigned.")
+        for assistant, assistant_obj in self.assistants.items():
+            if assistant not in local_workers:
+                flag = False
+                print(assistant + " is not assigned.")
+        if flag:
+            print("Everything fine")
+
+    def add_helper(self, day: int, month: int, year: int, shift: str, worker_name: str):
+        local_day = self.access_day(day, month, year)
+        if shift not in local_day.shifts:
+            raise KeyError("Shift does not exist.")
+        if worker_name in self.paramedics:
+            local_tuple = (worker_name, self.paramedics[worker_name])
+            if len(local_day.shifts[shift]) == 2:
+                local_day.shifts[shift].append(local_tuple)
+        elif worker_name in self.assistants:
+            local_tuple = (worker_name, self.assistants[worker_name])
+            if len(local_day.shifts[shift]) == 2:
+                local_day.shifts[shift].append(local_tuple)
+        elif worker_name in self.unavailable:
+            print("Worker is unavailable and can't be assigned")
+            return
+        else:
+            raise KeyError("Worker does not exist.")
+
+        local_day.show_shifts()
+        print(worker_name + " added as helper to the shift " + shift)
+        self.check_plan(local_day.shifts)
+
+    def remove_helper(self, day: int, month: int, year: int, shift: str, worker_name: str):
+        local_day = self.access_day(day, month, year)
+        if shift not in local_day.shifts:
+            raise KeyError("Shift does not exist.")
+        else:
+            local_pair = local_day.shifts[shift]
+            if len(local_pair) == 3:
+                if local_pair[-1][0] == worker_name:
+                    local_pair.pop()
+                else:
+                    raise KeyError("The entered worker name is wrong")
+            else:
+                raise ValueError("This shift does not have any helper.")
+        local_day.show_shifts()
+        print(worker_name + " removed as helper from shift  " + shift)
+        self.check_plan(local_day.shifts)
 
     def access_month(self, month_number: int, year_number: int) -> object:
         if year_number not in self.calendars:
@@ -322,31 +387,63 @@ class Medie:
 
         # Get the month name from the month number
         month_name = calendar.month_name[month_number]
-        file_path = os.path.join(f"{year}_Calendar", f"{month_name}.txt")
+        month_folder = os.path.join(f"{year}_Calendar", month_name)
 
-        if not os.path.exists(file_path):
+        if not os.path.exists(month_folder):
             print(f"No backend file found for {month_name} {year}.")
             return
 
-        with open(file_path, 'r') as file:
-            lines = file.readlines()
+        # Iterate over each day's file in the month folder
+        for day_file in os.listdir(month_folder):
+            file_path = os.path.join(month_folder, day_file)
+            day_number = int(day_file.split(' ')[0])  # Extract the day number from the file name
+            local_day = self.access_day(day_number, month_number, year)
 
-        day_number = None
-        local_day = None  # Ensure local_day is initialized
-        for line in lines:
-            line = line.strip()
-            if line.startswith("Day:"):
-                day_number = int(line.split(":")[1].strip())
-                local_day = self.access_day(day_number, month_number, year)
-            elif line and day_number is not None and local_day is not None:
-                shift_data = line.split(":")
-                shift = shift_data[0].strip()
-                workers = shift_data[1].strip()
-                if workers == "None":
-                    local_day.shifts[shift] = None
-                else:
-                    workers_list = workers.split(", ")
-                    paramedics = [(name, self.get_paramedic(name)) for name in workers_list if name in self.paramedics]
-                    assistants = [(name, self.get_assistant(name)) for name in workers_list if name in self.assistants]
-                    local_day.shifts[shift] = paramedics + assistants
+            with open(file_path, 'r') as file:
+                lines = file.readlines()
+
+            for line in lines:
+                line = line.strip()
+                if line.startswith("K"):  # Shift lines start with "K" (e.g., "K1", "K2")
+                    shift_data = line.split(":")
+                    shift = shift_data[0].strip()
+                    workers = shift_data[1].strip()
+                    if workers == "None":
+                        local_day.shifts[shift] = None
+                    else:
+                        workers_list = workers.split(", ")
+                        all_workers = []
+                        for name in workers_list:
+                            if name in self.paramedics:
+                                all_workers.append((name, self.get_paramedic(name)))
+                            elif name in self.assistants:
+                                all_workers.append((name, self.get_assistant(name)))
+                            else:
+                                # Handle other types of workers if necessary
+                                print(f"Warning: Worker '{name}' not found in paramedics or assistants")
+                        local_day.shifts[shift] = all_workers
+
+                elif line.startswith("Rest of workers:"):
+                    rest_data = line.split(":")[1].strip()
+                    if rest_data != "None":
+                        rest_workers_list = rest_data.split(", ")
+                        for name in rest_workers_list:
+                            if name in self.paramedics:
+                                local_day.rest[name] = self.get_paramedic(name)
+                            elif name in self.assistants:
+                                local_day.rest[name] = self.get_assistant(name)
+                            else:
+                                print(f"Warning: Rest worker '{name}' not found")
+
+                elif line.startswith("Unavailable workers:"):
+                    unavailable_data = line.split(":")[1].strip()
+                    if unavailable_data != "None":
+                        unavailable_workers_list = unavailable_data.split(", ")
+                        for name in unavailable_workers_list:
+                            if name in self.paramedics:
+                                local_day.unavailable[name] = self.get_paramedic(name)
+                            elif name in self.assistants:
+                                local_day.unavailable[name] = self.get_assistant(name)
+                            else:
+                                print(f"Warning: Unavailable worker '{name}' not found")
 

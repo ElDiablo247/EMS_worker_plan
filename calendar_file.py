@@ -56,30 +56,46 @@ class Calendar:
 
     def create_calendar_folder(self):
         # Define the folder name based on the year
-        folder_name = f"{self.year}_Calendar"
+        year_folder = f"{self.year}_Calendar"
+
         # Create the folder if it does not already exist
-        if not os.path.exists(folder_name):
-            os.makedirs(folder_name)
-            print(f"Folder created: {folder_name}")
+        if not os.path.exists(year_folder):
+            os.makedirs(year_folder)
+            print(f"Folder created: {year_folder}")
         else:
-            print(f"Folder already exists: {folder_name}")
+            print(f"Folder already exists: {year_folder}")
 
-        # Create txt files for each month of the year
-        for key, value in self.months.items():
-            local_name = value.get_name()
-            txt_filename = os.path.join(folder_name, f"{local_name}.txt")
+        # Create a folder for each month and a file for each day within it
+        for month_number, month_object in self.months.items():
+            # Define the month folder path using the month name
+            month_folder = os.path.join(year_folder, month_object.get_name())
 
-            # Check if the .txt file already exists
-            if not os.path.exists(txt_filename):
-                try:
-                    with open(txt_filename, mode='w') as file:
-                        pass
-                    print(f"Empty .txt file created: {txt_filename}")
-                except IOError as e:
-                    # Raise an IOError if there is an issue with file operations
-                    raise IOError(f"Error creating file {txt_filename}: {e}")
-                except Exception as e:
-                    # Raise any other exceptions encountered
-                    raise RuntimeError(f"Unexpected error occurred with file {txt_filename}: {e}")
+            # Create the month folder if it doesn't already exist
+            if not os.path.exists(month_folder):
+                os.makedirs(month_folder)
+                print(f"Month folder created: {month_folder}")
             else:
-                print(f".txt file already exists: {txt_filename}")
+                print(f"Month folder already exists: {month_folder}")
+
+            # Create a file for each day in the month
+            for day_number, day_object in month_object.days.items():
+                # Get the day name (e.g., "Monday")
+                day_name = day_object.get_day_name()
+
+                # Define the file path for each day, including the day name
+                day_filename = os.path.join(month_folder, f"{day_number} - {day_name}.txt")
+
+                # Check if the .txt file for the day already exists
+                if not os.path.exists(day_filename):
+                    try:
+                        with open(day_filename, mode='w') as file:
+                            pass  # Create an empty file
+                        print(f"Empty .txt file created: {day_filename}")
+                    except IOError as e:
+                        # Raise an IOError if there is an issue with file operations
+                        raise IOError(f"Error creating file {day_filename}: {e}")
+                    except Exception as e:
+                        # Raise any other exceptions encountered
+                        raise RuntimeError(f"Unexpected error occurred with file {day_filename}: {e}")
+                else:
+                    print(f".txt file already exists: {day_filename}")

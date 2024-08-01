@@ -22,7 +22,6 @@ def assign_week(self) -> list:
     # workers are loaded to local lists and then shuffled to be random
     local_paramedics = list(self.paramedics.items())
     local_assistants = list(self.assistants.items())
-    local_unavailable = list(self.unavailable.items())
     random.shuffle(local_paramedics)
     random.shuffle(local_assistants)
     local_shifts_nr = self.nr_of_shifts
@@ -42,8 +41,9 @@ def assign_week(self) -> list:
         local_weekly_plan[local_shift] = local_pair
 
     # the rest of the workers (if any) that have not been assigned
-    rest = local_paramedics + local_assistants
-    result = [local_weekly_plan, rest, local_unavailable]
+    local_rest = local_paramedics + local_assistants
+    rest_final = dict(local_rest)
+    result = [local_weekly_plan, rest_final, self.unavailable]
     return result
 
 

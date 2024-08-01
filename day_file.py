@@ -10,8 +10,8 @@ class Day_Class:
         self.day_name = None
         self.assign_day_name()
         self.shifts = dict()
-        self.rest = []
-        self.unavailable = []
+        self.rest = dict()
+        self.unavailable = dict()
 
     def get_number(self):
         return self.number
@@ -31,10 +31,14 @@ class Day_Class:
         self.day_name = name
 
     def assign_rest(self):
-        for shift, pair in self.shifts.items():
-            if len(self.rest) != 0:
-                local_worker = self.rest.pop()
-                pair.append(local_worker)
+        local_rest = list(self.rest.items())
+        min_length = min(len(local_rest), len(self.shifts))
+        for i in range(1, min_length + 1):
+            local_shift = "K" + str(i)
+            if local_shift in self.shifts:
+                local_worker = local_rest.pop()
+                self.shifts[local_shift].append(local_worker)
+        self.rest = dict(local_rest)
 
     def show_shifts(self):
         print(str(self.number) + "." + str(self.month) + "." + str(self.year) + ":")
@@ -50,10 +54,10 @@ class Day_Class:
 
     def show_rest(self):
         print("These are unassigned workers:")
-        for worker in self.rest:
+        for worker in self.rest.items():
             print(worker[0])
 
     def show_unavailable(self):
         print("These are unavailable workers:")
-        for worker in self.unavailable:
+        for worker in self.unavailable.items():
             print(worker[0])
