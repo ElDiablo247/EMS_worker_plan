@@ -1,5 +1,6 @@
 import os
 from day_file import *
+from backend_functions import update_month_backend
 
 
 class Month:
@@ -119,37 +120,4 @@ class Month:
             day_object.show_shifts()
 
     def update_month_backend(self):
-        # Define the path for the month folder using the month name
-        month_folder = os.path.join(f"{self.year}_Calendar", self.get_name())
-
-        # Ensure the month folder exists
-        if not os.path.exists(month_folder):
-            os.makedirs(month_folder)
-            print(f"Month folder created: {month_folder}")
-
-        # Write each day's shifts to a separate file named by the day number and day name
-        for day_number, day_object in self.days.items():
-            # Get the day name (e.g., "Monday")
-            day_name = day_object.get_day_name()
-
-            # Define the file path for each day, including the day name
-            file_path = os.path.join(month_folder, f"{day_number} - {day_name}.txt")
-
-            # Write the shift information to the file
-            with open(file_path, 'w') as file:
-                # Write shift information
-                for shift, pair in day_object.shifts.items():
-                    if pair is not None:
-                        # Collect all worker names in a single line, separated by commas
-                        workers = ", ".join(worker[0] for worker in pair)
-                        file.write(f"{shift}: {workers}\n")
-                    else:
-                        file.write(f"{shift}: None\n")
-
-                # Write rest of the workers
-                rest_workers = ", ".join(worker[0] for worker in day_object.rest.items())
-                file.write(f"\nRest of workers: {rest_workers if rest_workers else 'None'}\n")
-
-                # Write unavailable workers
-                unavailable_workers = ", ".join(worker[0] for worker in day_object.unavailable.items())
-                file.write(f"Unavailable workers: {unavailable_workers if unavailable_workers else 'None'}\n")
+        return update_month_backend(self)

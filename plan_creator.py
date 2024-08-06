@@ -2,6 +2,7 @@ import calendar
 import random
 import copy
 
+
 def assign_week(self) -> list:
     """
     Description: This function returns a list of 3 items containing a dictionary, a list and another list. The

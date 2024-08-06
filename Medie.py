@@ -1,9 +1,7 @@
-import csv
-import os
-import calendar
 from worker_file import Worker
 from calendar_file import Calendar
 from plan_creator import assign_month_shifts, assign_week
+from backend_functions import *
 
 
 class Medie:
@@ -32,14 +30,15 @@ class Medie:
 
         Attributes:
             1. name - Type: string - Name of the class Medie.
-            2. paramedics - Type: dict - Collection to store string - paramedic_object pairs
-            3. assistants - Type: dict - Collection to store string - assistant_object pairs
-            4. nr_of_shifts - Type: integer - This is the number of different shifts this medie object has
-            5. calendars - Type: dict - This is a dictionary containing the calendars with the plan of the whole year
+            2. nr_of_shifts - Type: integer - This is the number of different shifts this medie object has
+            3. calendars - Type: dict - This is a dictionary containing the calendars with the plan of the whole year
+            4. paramedics - Type: dict - Collection to store string - paramedic_object pairs
+            5. assistants - Type: dict - Collection to store string - assistant_object pairs
+            6. unavailable - Type: dict - Collection to store workers that are not available for planning
 
         Function calls:
 
-            1. populate_workers() - Loads the workers from the backend, to the program's memory.
+            1. populate_workers() - Loads the workers data from the backend, to the program's memory.
 
         """
         self.name = name
@@ -168,36 +167,6 @@ class Medie:
         else:
             print("Worker ", name, " not found in paramedics or assistants.")
 
-    def update_workers_backend(self):
-        """
-        Description: Changes that are made to the data of the Medie class (all the dictionaries containing workers)
-        are also updated to the backend which is a simple text file for simplicity reasons.
-        This fuction does exactly that, rereads the date contained in the attributes of a created Medie object, and
-        then updates the backend files.
-        Function show_workers_txt() is called at the end.
-
-        Args: None
-
-        Returns: -
-
-        """
-        with open('Paramedics.txt', 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(['Index', 'Name', 'Function', 'Status'])
-            index = 1
-            for name, worker in self.paramedics.items():
-                writer.writerow([index, name, worker.get_function(), worker.get_availability_status()])
-                index += 1
-        with open('Assistants.txt', 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(['Index', 'Name', 'Function', 'Status'])
-            index = 1
-            for name, worker in self.assistants.items():
-                writer.writerow([index, name, worker.get_function(), worker.get_availability_status()])
-                index += 1
-        print("Backend Updated. New context: \n")
-        self.populate()
-
     def populate_workers(self):
         """
         Description: This function is only called from the constructor method once an instance of Medie is created.
@@ -238,30 +207,6 @@ class Medie:
                 else:
                     self.unavailable[assistant.get_name()] = assistant
         self.get_workers()
-
-    def show_workers_txt(self):
-        """
-        Description: This function shows what data the backend contains at the time of calling. Print statements are
-        used to show the user the data.
-
-        Args: None
-
-        Returns: -
-
-        """
-        with open('Paramedics.txt', 'r') as file:
-            reader = csv.reader(file)
-            next(reader)
-            print("These are our paramedics: ")
-            for row in reader:
-                print(row[1] + ", " + row[2])
-            print(" ")
-        with open('Assistants.txt', 'r') as file:
-            reader = csv.reader(file)
-            next(reader)
-            print("These are our medical assistants: ")
-            for row in reader:
-                print(row[1] + ", " + row[2])
 
     def show_day_plan(self, day: int, month: int, year: int):
         if year not in self.calendars:
@@ -381,69 +326,10 @@ class Medie:
         return assign_week(self)
 
     def load_month_backend(self, month_number: int, year: int):
+        return load_month_backend(self, month_number, year)
 
-        if month_number < 1 or month_number > 12:
-            raise ValueError("Invalid month number")
+    def update_workers_backend(self):
+        return update_workers_backend(self)
 
-        # Get the month name from the month number
-        month_name = calendar.month_name[month_number]
-        month_folder = os.path.join(f"{year}_Calendar", month_name)
-
-        if not os.path.exists(month_folder):
-            print(f"No backend file found for {month_name} {year}.")
-            return
-
-        # Iterate over each day's file in the month folder
-        for day_file in os.listdir(month_folder):
-            file_path = os.path.join(month_folder, day_file)
-            day_number = int(day_file.split(' ')[0])  # Extract the day number from the file name
-            local_day = self.access_day(day_number, month_number, year)
-
-            with open(file_path, 'r') as file:
-                lines = file.readlines()
-
-            for line in lines:
-                line = line.strip()
-                if line.startswith("K"):  # Shift lines start with "K" (e.g., "K1", "K2")
-                    shift_data = line.split(":")
-                    shift = shift_data[0].strip()
-                    workers = shift_data[1].strip()
-                    if workers == "None":
-                        local_day.shifts[shift] = None
-                    else:
-                        workers_list = workers.split(", ")
-                        all_workers = []
-                        for name in workers_list:
-                            if name in self.paramedics:
-                                all_workers.append((name, self.get_paramedic(name)))
-                            elif name in self.assistants:
-                                all_workers.append((name, self.get_assistant(name)))
-                            else:
-                                # Handle other types of workers if necessary
-                                print(f"Warning: Worker '{name}' not found in paramedics or assistants")
-                        local_day.shifts[shift] = all_workers
-
-                elif line.startswith("Rest of workers:"):
-                    rest_data = line.split(":")[1].strip()
-                    if rest_data != "None":
-                        rest_workers_list = rest_data.split(", ")
-                        for name in rest_workers_list:
-                            if name in self.paramedics:
-                                local_day.rest[name] = self.get_paramedic(name)
-                            elif name in self.assistants:
-                                local_day.rest[name] = self.get_assistant(name)
-                            else:
-                                print(f"Warning: Rest worker '{name}' not found")
-
-                elif line.startswith("Unavailable workers:"):
-                    unavailable_data = line.split(":")[1].strip()
-                    if unavailable_data != "None":
-                        unavailable_workers_list = unavailable_data.split(", ")
-                        for name in unavailable_workers_list:
-                            if name in self.paramedics:
-                                local_day.unavailable[name] = self.get_paramedic(name)
-                            elif name in self.assistants:
-                                local_day.unavailable[name] = self.get_assistant(name)
-                            else:
-                                print(f"Warning: Unavailable worker '{name}' not found")
-
+    def show_workers_backend(self):
+        return show_workers_backend(self)
