@@ -50,11 +50,12 @@ def assign_week(self) -> list:
 
 def assign_month_shifts(self, month_number: int, year_number: int):
     """
-    Description:
+    Description: This function creates the plan for a whole month by calling the assign_week function for each week
+    in that month.
 
     Args:
-        1. ?Name? - Type: ? - ?????????descr??????????
-        2. ?Name? - Type: ? - ??????????descr?????????
+        1. month_number - Type: int - The number of month e.g. 2 for February
+        2. year_number - Type: int - The year number e.g. 2024
 
     Returns: -
 

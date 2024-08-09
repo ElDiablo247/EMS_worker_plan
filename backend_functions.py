@@ -1,6 +1,7 @@
 import os
 import calendar
 import csv
+from worker_file import Worker
 
 
 def load_month_backend(self, month_number: int, year: int):
@@ -180,3 +181,45 @@ def update_month_backend(self):
             # Write unavailable workers
             unavailable_workers = ", ".join(worker[0] for worker in day_object.unavailable.items())
             file.write(f"Unavailable workers: {unavailable_workers if unavailable_workers else 'None'}\n")
+
+
+def populate_workers(self):
+    """
+    Description: This function is only called from the constructor method once an instance of Medie is created.
+    Its purpose is to load the data from the backend, to the storage of the program itself (dictionary
+    attributes) so that the user can directly work with the data in hand without having to make a call to the
+    backend each time he makes a change The paramedics and assistants dictionaries are loaded with the
+    data from the backend txt files.
+
+    Args: None
+
+    Returns: -
+
+    """
+    with open('Paramedics.txt', 'r') as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            name = row[1]
+            function = row[2]
+            availability = row[3]
+            availability_status = availability.lower() == 'true'
+            paramedic = Worker(name, function, availability_status)
+            if paramedic.get_availability_status():
+                self.paramedics[paramedic.get_name()] = paramedic
+            else:
+                self.unavailable[paramedic.get_name()] = paramedic
+    with open('Assistants.txt', 'r') as file:
+        reader2 = csv.reader(file)
+        next(reader2)
+        for row in reader2:
+            name = row[1]
+            function = row[2]
+            availability = row[3]
+            availability_status = availability.lower() == 'true'
+            assistant = Worker(name, function, availability_status)
+            if assistant.get_availability_status():
+                self.assistants[assistant.get_name()] = assistant
+            else:
+                self.unavailable[assistant.get_name()] = assistant
+    self.show_workers()

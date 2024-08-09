@@ -1,4 +1,3 @@
-from worker_file import Worker
 from calendar_file import Calendar
 from plan_creator import assign_month_shifts, assign_week
 from backend_functions import *
@@ -50,33 +49,87 @@ class Medie:
         self.populate_workers()
 
     def get_name(self):
+        """
+        Description: Getter function to return the name of a Medie object
+
+        Args: -
+
+        Returns: The name of the Medie object.
+
+        """
         return self.name
 
     def get_nr_of_shifts(self):
+        """
+        Description: Getter function for the number of shifts of a Medie object
+
+        Args: -
+
+        Returns: A number of type int representing the number of shifts
+
+        """
         return self.nr_of_shifts
 
-    def get_calendars(self):
-        for key, value in self.calendars.items():
-            return key
+    def get_calendar(self, calendar_year: int):
+        """
+        Description: Getter function that returns the calendar object if it exists
+
+        Args:
+            1. calendar_year - Type: int - The calendar year e.g. 2024
+
+        Returns: Calendar object
+
+        """
+        if calendar_year in self.calendars:
+            return self.calendars[calendar_year]
+        else:
+            raise KeyError("The number does not exist or there is a typo mistake. Try again")
 
     def get_paramedic(self, paramedic_name: str):
+        """
+        Description: Getter function that returns a paramedic object if it exists
+
+        Args:
+            1. paramedic_name - Type: string - The string name of the paramedic object. If it exists, it gets returned
+
+        Returns: A paramedic object
+
+        """
         if paramedic_name in self.paramedics:
             return self.paramedics[paramedic_name]
+        else:
+            raise KeyError("The name does not exist or there is a typo mistake. Try again")
 
     def get_assistant(self, assistant_name: str):
+        """
+        Description: Getter function that returns an assistant object if it exists
+
+        Args:
+            1. assistant_name - Type: string - The string name of the assistant object. If it exists, it gets returned
+
+        Returns: An assistant object
+
+        """
         if assistant_name in self.assistants:
             return self.assistants[assistant_name]
-
-    def get_paramedics(self):
-        return self.paramedics
-
-    def get_assistants(self):
-        return self.assistants
+        else:
+            raise KeyError("The name does not exist or there is a typo mistake. Try again")
 
     def change_nr_of_shifts(self, new_number: int):
-        self.nr_of_shifts = new_number
+        if new_number > 0:
+            self.nr_of_shifts = new_number
+        else:
+            raise ValueError("Number must be higher than 0")
 
-    def get_workers(self):
+    def show_workers(self):
+        """
+        Description: A function that shows the user the workers that work for this specific Medie object.
+
+        Args: -
+
+        Returns: -
+
+        """
         paramedics = ["Paramedics and their availabilty\n"]
         for key, paramedic_object in self.paramedics.items():
             name = key
@@ -109,15 +162,23 @@ class Medie:
         print("")
 
     def add_calendar(self, calendar_year: int):
+        """
+        Description: Function that adds a new calendar in the calendars attribute
+
+        Args:
+            1. calendar_year - Type: int - The year of the calendar to add e.g. 2023
+
+        Returns: -
+
+        """
         if calendar_year not in self.calendars:
             self.calendars[calendar_year] = Calendar(calendar_year)
+        else:
+            raise ValueError("Calendar already exists.")
 
     def add_worker(self, obj: Worker):
         """
-        Description: User inputs an object Worker, and it is added either to the paramedics dictionary or
-        to the assistants dictionary depending on the function of that Worker (only if it does not already exist).
-        If a Worker object already exists with the same name attribute as the input, then the user is notified of
-        the error.
+        Description: Add new worker based on function (paramedic or assistant) if does not already exist.
 
         Args:
             1. obj - Type: Worker - The object to be added to the corresponding dictionary.
@@ -132,28 +193,22 @@ class Medie:
                 self.paramedics[worker_name] = obj
                 print("Worker " + worker_name + " added to paramedics.")
             else:
-                print("Worker " + worker_name + " already exists in paramedics.")
-                return
+                raise KeyError("Worker already exists in paramedics.")
         elif worker_function == "Assistant":
             if worker_name not in self.assistants:
                 self.assistants[worker_name] = obj
                 print("Worker " + worker_name + " added to assistants.")
             else:
-                print("Worker " + worker_name + " already exists in paramedics.")
-                return
+                raise KeyError("Worker already exists in assistants.")
         else:
-            print("Wrong function. Worker must have function 'Paramedic' or 'Assistant'.")
-            return
+            raise KeyError("Wrong function for the worker added. Check again.")
 
     def remove_worker(self, name: str):
         """
-        Description: User inputs the name attribute of the Worker object which is of type string. The name is
-        searched in both paramedics and assistants dictionaries and if found in any of them, the Worker object is
-        removed and the user is notified of the change. If the name is not found then the user is also notified that
-        the name does not exist.
+        Description: Worker object to be romoved from the paramedics or assistants attributes if string name exists.
 
         Args:
-            1. name - Type: string - The name attribute of the Worker object to be removed.
+            1. name - Type: string - The string name attribute of the Worker object to be removed.
 
         Returns: -
 
@@ -165,48 +220,10 @@ class Medie:
             removed_worker = self.assistants.pop(name)
             print("Worker removed: ", removed_worker.get_name())
         else:
-            print("Worker ", name, " not found in paramedics or assistants.")
+            raise KeyError("The name entered does not exist.")
 
     def populate_workers(self):
-        """
-        Description: This function is only called from the constructor method once an instance of Medie is created.
-        Its purpose is to load the data from the backend, to the storage of the program itself (dictionary
-        attributes) so that the user can directly work with the data in hand without having to make a call to the
-        backend each time he makes a change The paramedics and assistants dictionaries are loaded with the
-        data from the backend txt files.
-
-        Args: None
-
-        Returns: -
-
-        """
-        with open('Paramedics.txt', 'r') as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                name = row[1]
-                function = row[2]
-                availability = row[3]
-                availability_status = availability.lower() == 'true'
-                paramedic = Worker(name, function, availability_status)
-                if paramedic.get_availability_status():
-                    self.paramedics[paramedic.get_name()] = paramedic
-                else:
-                    self.unavailable[paramedic.get_name()] = paramedic
-        with open('Assistants.txt', 'r') as file:
-            reader2 = csv.reader(file)
-            next(reader2)
-            for row in reader2:
-                name = row[1]
-                function = row[2]
-                availability = row[3]
-                availability_status = availability.lower() == 'true'
-                assistant = Worker(name, function, availability_status)
-                if assistant.get_availability_status():
-                    self.assistants[assistant.get_name()] = assistant
-                else:
-                    self.unavailable[assistant.get_name()] = assistant
-        self.get_workers()
+        return populate_workers(self)
 
     def show_day_plan(self, day: int, month: int, year: int):
         if year not in self.calendars:

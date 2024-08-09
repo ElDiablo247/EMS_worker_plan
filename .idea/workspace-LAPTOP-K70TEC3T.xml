@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1984acdf-ad0a-47c7-9f5d-c6b99f9e5d96" name="Changes" comment="06.08.24 &#10;&#10;Changes to the backend functions (now they are in different file and can be imported)" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2Ze4AXbyTUgIhHacINbw19seDSj" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Medie.executor": "Run",
+    "Python.TEST2.executor": "Run",
+    "Python.Test.executor": "Run",
+    "Python.Test_medie.executor": "Run",
+    "Python.Tyre_shop_suitable_stack.executor": "Run",
+    "Python.backend_functions.executor": "Run",
+    "Python.calendar_file.executor": "Run",
+    "Python.day_file.executor": "Run",
+    "Python.month_file.executor": "Run",
+    "Python.placeholer_codes.executor": "Run",
+    "Python.plan_creator.executor": "Run",
+    "Python.planer_file.executor": "Run",
+    "Python.populate.executor": "Run",
+    "Python.shift_file.executor": "Run",
+    "Python.worker_file.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/OneDrive - The Open University/Documents/OPEN UNIVERSITY/My PyCharm Projects/PythonProjectMEDIE",
+    "settings.editor.selected.configurable": "vcs.Git"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\raul_\OneDrive - The Open University\Documents\OPEN UNIVERSITY\My PyCharm Projects\PythonProjectMEDIE\.venv" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-f5635417b835-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18968.29" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1984acdf-ad0a-47c7-9f5d-c6b99f9e5d96" name="Changes" comment="" />
+      <created>1702769069735</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702769069735</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Commit message Raul">
+      <option name="closed" value="true" />
+      <created>1720735358973</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1720735358973</updated>
+    </task>
+    <task id="LOCAL-00002" summary="dick">
+      <option name="closed" value="true" />
+      <created>1720736665404</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1720736665404</updated>
+    </task>
+    <task id="LOCAL-00003" summary="dick">
+      <option name="closed" value="true" />
+      <created>1720736880433</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1720736880433</updated>
+    </task>
+    <task id="LOCAL-00004" summary="dick">
+      <option name="closed" value="true" />
+      <created>1720737100865</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1720737100865</updated>
+    </task>
+    <task id="LOCAL-00005" summary="dick">
+      <option name="closed" value="true" />
+      <created>1720737567664</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1720737567664</updated>
+    </task>
+    <task id="LOCAL-00006" summary="12.07.2024. at 00:42">
+      <option name="closed" value="true" />
+      <created>1720737778433</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1720737778433</updated>
+    </task>
+    <task id="LOCAL-00007" summary="12.07.2024. at 00:42">
+      <option name="closed" value="true" />
+      <created>1720819510977</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1720819510977</updated>
+    </task>
+    <task id="LOCAL-00008" summary="12.07.2024. at 00:42">
+      <option name="closed" value="true" />
+      <created>1720827410986</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1720827410986</updated>
+    </task>
+    <task id="LOCAL-00009" summary="16.07.2024. at 00:55&#10;Changes in assign_manually and assign week and month">
+      <option name="closed" value="true" />
+      <created>1721084210539</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1721084210539</updated>
+    </task>
+    <task id="LOCAL-00010" summary="16.07.2024. at 15:00&#10;Changes in error handling">
+      <option name="closed" value="true" />
+      <created>1721134743497</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1721134743497</updated>
+    </task>
+    <task id="LOCAL-00011" summary="17.07.2024. at 23:26&#10;Changes in IDEAS. Check the file.">
+      <option name="closed" value="true" />
+      <created>1721251628233</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1721251628233</updated>
+    </task>
+    <task id="LOCAL-00012" summary="12.07.2024. at 18:08&#10;Month class now has attribute that stores the whole month plan&#10;Calendar class creates a folder of files with csv files to contain backend">
+      <option name="closed" value="true" />
+      <created>1721664521925</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1721664521925</updated>
+    </task>
+    <task id="LOCAL-00013" summary="23.07.2024. at 00:12&#10;Update to previous change">
+      <option name="closed" value="true" />
+      <created>1721686380631</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1721686380631</updated>
+    </task>
+    <task id="LOCAL-00014" summary="24.07.2024. at 00:04&#10;&#10;The function load_backend has been added to Medie class to load the data from the input month to the program">
+      <option name="closed" value="true" />
+      <created>1721772376783</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1721772376783</updated>
+    </task>
+    <task id="LOCAL-00015" summary="26.07.2024. at 22:16">
+      <option name="closed" value="true" />
+      <created>1722026074150</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1722026074150</updated>
+    </task>
+    <task id="LOCAL-00016" summary="30.07.2024. at 21:48&#10;&#10;Deepcopy in the plan_creator file because each week was a single entity where if a change was made to one day then it would have been copied everywhere(no bueno)">
+      <option name="closed" value="true" />
+      <created>1722369020024</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1722369020024</updated>
+    </task>
+    <task id="LOCAL-00017" summary="30.07.2024. at 21:48&#10;&#10;Deepcopy in the plan_creator file because each week was a single entity where if a change was made to one day then it would have been copied everywhere(no good)">
+      <option name="closed" value="true" />
+      <created>1722369270341</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1722369270341</updated>
+    </task>
+    <task id="LOCAL-00018" summary="01.08.2024 21:48&#10;&#10;Changes in backend&#10;Chenges in assign manually and assign rest">
+      <option name="closed" value="true" />
+      <created>1722541743896</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1722541743896</updated>
+    </task>
+    <task id="LOCAL-00019" summary="06.08.24 &#10;&#10;Changes to the backend functions (now they are in different file and can be imported)">
+      <option name="closed" value="true" />
+      <created>1722980467450</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1722980467450</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Commit message Raul" />
+    <MESSAGE value="dick" />
+    <MESSAGE value="12.07.2024. at 00:42" />
+    <MESSAGE value="13.07.2024. at 01:37" />
+    <MESSAGE value="16.07.2024. at 00:55&#10;Changes in assign_manually and assign week and month" />
+    <MESSAGE value="16.07.2024. at 15:00&#10;Changes in error handling" />
+    <MESSAGE value="17.07.2024. at 23:26&#10;Changes in IDEAS. Check the file." />
+    <MESSAGE value="12.07.2024. at 18:08&#10;Month class now has attribute that stores the whole month plan&#10;Calendar class creates a folder of files with csv files to contain backend" />
+    <MESSAGE value="23.07.2024. at 00:12&#10;Update to previous change" />
+    <MESSAGE value="24.07.2024. at 00:04&#10;&#10;The function load_backend has been added to Medie class to load the data from the input month to the program" />
+    <MESSAGE value="26.07.2024. at 22:16" />
+    <MESSAGE value="30.07.2024. at 21:48&#10;&#10;Deepcopy in the plan_creator file because each week was a single entity where if a change was made to one day then it would have been copied everywhere(no bueno)" />
+    <MESSAGE value="30.07.2024. at 21:48&#10;&#10;Deepcopy in the plan_creator file because each week was a single entity where if a change was made to one day then it would have been copied everywhere(no good)" />
+    <MESSAGE value="01.08.2024 21:48&#10;&#10;Changes in backend&#10;Chenges in assign manually and assign rest" />
+    <MESSAGE value="06.08.24 &#10;&#10;Changes to the backend functions (now they are in different file and can be imported)" />
+    <option name="LAST_COMMIT_MESSAGE" value="06.08.24 &#10;&#10;Changes to the backend functions (now they are in different file and can be imported)" />
+  </component>
+</project>
