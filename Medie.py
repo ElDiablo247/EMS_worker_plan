@@ -116,6 +116,16 @@ class Medie:
             raise KeyError("The name does not exist or there is a typo mistake. Try again")
 
     def change_nr_of_shifts(self, new_number: int):
+        """
+        Description: This function is used to change the nr. of shifts that the medie object has. e.g if the current
+        number is 5 and the user inputs 3 then the number changes from 5 to 3
+
+        Args:
+            1. new_number - Type: int - The new number of the shifts
+
+        Returns: -
+
+        """
         if new_number > 0:
             self.nr_of_shifts = new_number
         else:
@@ -223,9 +233,30 @@ class Medie:
             raise KeyError("The name entered does not exist.")
 
     def populate_workers(self):
+        """
+        Description: This function calls the function populate_workers from the backend_functions file.
+        Read the docstring there.
+
+        Args: -
+
+        Returns: populate_workers(self)
+
+        """
         return populate_workers(self)
 
     def show_day_plan(self, day: int, month: int, year: int):
+        """
+        Description: Function that shows(prints) the plan for the day inputed by the user. First it creates a day object
+        of that date and then calls the method show_shifts of that day object.
+
+        Args:
+            1. day - Type: int - The number of the day
+            2. month - Type: int - The number of the month
+            3. year - Type: int - The number of the year
+
+        Returns: -
+
+        """
         if year not in self.calendars:
             raise KeyError("Year does not exist.")
         if month not in self.calendars[year].months:
@@ -237,6 +268,26 @@ class Medie:
         day_local.show_shifts()
 
     def assign_manually(self, day: int, month: int, year: int, shift: str, new_paramedic: str, new_assistant: str):
+        """
+        Description: This function first creates a new instance of a Day object with the date input by the user in
+        the parameters. If one of the other parameters are wrong (shift, paramedic or assistant) an error is
+        raised. If not, the function continues by creating a tuple for the paramedic and one for the assistant which
+        contain the string name, and also the corresponding object. A list variable then is created containing the two
+        tuples. The variable is then assigned to the shift (it being the pair of workers obviously that will work
+        together). The change is showed to the user with a print statement and Day function show_shifts is called. At
+        the end the check_plan function is called to test if everything is okay and no errors have been made.
+
+        Args:
+            1. day - Type: int - The number of the day e.g. 10
+            2. month - Type: int - The number of the month e.g. 12 for December
+            3. year - Type: int - The number of the year
+            4. shift - Type: str - The shift to be changed e.g. "K3"
+            5. new_paramedic - Type: str - The string name of the new paramedic
+            6. new_assistant - Type: str - The string name of the new assistant
+
+        Returns: -
+
+        """
         local_day = self.access_day(day, month, year)
         if shift not in local_day.shifts:
             raise KeyError("Shift does not exist, or has not been created yet. Try again.")
@@ -254,6 +305,17 @@ class Medie:
         self.check_plan(local_day.shifts)
 
     def check_plan(self, plan: dict):
+        """
+        Description: This is a function that checks if the plan of a Day object has right results. It is only called
+        from the assign_manually function. This function checks if the shifts plan does not have errors like
+        unassigned workers or duplicate of workers assigned somewhere.
+
+        Args:
+            1. plan - Type: dict - The shifts plan of a specific Day object to be checked.
+
+        Returns: -
+
+        """
         flag = True
         local_workers = dict()
         # Check duplicates of workers
@@ -280,6 +342,21 @@ class Medie:
             print("Everything fine")
 
     def add_helper(self, day: int, month: int, year: int, shift: str, worker_name: str):
+        """
+        Description: Function that adds a worker as a helper to an already assigned paramedic-assistant pair. Some
+        constraints are first checked like if the workers exist, if their names are right, if the shift exists and if
+        the workers are available.
+
+        Args:
+            1. day - Type: int - The day number of the date e.g. 29
+            2. month - Type: int - The month number of the date e.g. 12 for December
+            3. year - Type: int - The year e.g. 2024
+            4. shift - Type: str - The shift where the helper should be assigned e.g. "K3"
+            5. worker_name - Type: str - The name of the worker to be assigned as a helper
+
+        Returns: -
+
+        """
         local_day = self.access_day(day, month, year)
         if shift not in local_day.shifts:
             raise KeyError("Shift does not exist.")
@@ -302,6 +379,20 @@ class Medie:
         self.check_plan(local_day.shifts)
 
     def remove_helper(self, day: int, month: int, year: int, shift: str, worker_name: str):
+        """
+        Description: A function that removes a worker from an assigned shift (the third worker which is the helper).
+        If shift exists and worker is indeed assigned to that shift then it gets removed.
+
+        Args:
+            1. day - Type: int - The day number of the date e.g. 29
+            2. month - Type: int - The month number of the date e.g. 12 for December
+            3. year - Type: int - The year e.g. 2024
+            4. shift - Type: str - The shift where the helper should be removed from e.g. "K3"
+            5. worker_name - Type: str - The name of the worker helper to be removed
+
+        Returns: -
+
+        """
         local_day = self.access_day(day, month, year)
         if shift not in local_day.shifts:
             raise KeyError("Shift does not exist.")
@@ -319,6 +410,19 @@ class Medie:
         self.check_plan(local_day.shifts)
 
     def access_month(self, month_number: int, year_number: int) -> object:
+        """
+        Description: This function returns an instance of a month that the user inputs. E.g. user types 12 and 2024
+        then this function returns the month December of the year 2024. It is usually used to set a variable for example
+        variable_month = access_month(12, 2024) and now the variable_month contains an instance of the December Month
+        object.
+
+        Args:
+            1. month_number - Type: int - The month number of the date e.g. 12 for December
+            2. year_number - Type: int - The year e.g. 2024
+
+        Returns: An instance of the Month object
+
+        """
         if year_number not in self.calendars:
             raise KeyError("Year does not exist. Try again")
         if month_number not in self.calendars[year_number].months:
@@ -327,6 +431,20 @@ class Medie:
         return self.calendars[year_number].months[month_number]
 
     def access_day(self, day_number: int, month_number: int, year_number: int) -> object:
+        """
+        Description: This function returns an instance of the day that the user inputs E.g. user types 23,
+        12 and 2024 then this function returns the day 23 of month December of the year 2024. It is usually used to
+        set a variable for example variable_day = access_day(23, 12, 2024) and now the variable_day contains an
+        instance of the day 23 of December 2024 Day object.
+
+        Args:
+            1. day_number - Type: int - The day number e.g. 23
+            2. month_number - Type: int - The month number e.g. 12 for December
+            3. year_number - Type: int - The year number e.g. 2024
+
+        Returns: An instance of the Day object
+
+        """
         if year_number not in self.calendars:
             raise KeyError("Year does not exist.")
         if month_number not in self.calendars[year_number].months:

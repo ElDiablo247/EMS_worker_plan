@@ -3,6 +3,43 @@ import random
 import copy
 
 
+def assign_month_shifts(self, month_number: int, year_number: int):
+    """
+    Description: This function creates the plan for a whole month by calling the assign_week function for each week
+    in that month.
+
+    Args:
+        1. month_number - Type: int - The number of month e.g. 2 for February
+        2. year_number - Type: int - The year number e.g. 2024
+
+    Returns: -
+
+    """
+
+    if year_number not in self.calendars:
+        raise KeyError("The year entered does not exist.")
+    if month_number not in self.calendars[year_number].months:
+        raise KeyError("The month entered does not exist.")
+
+    weeks_of_month = calendar.monthcalendar(year_number, month_number)
+    for week in weeks_of_month:
+        week_plan = self.assign_week()
+        for day in week:
+            if day != 0:
+                day_object = self.access_day(day, month_number, year_number)
+                if day_object is None:
+                    # access_day already printed the error message, so we just return here
+                    return
+                if day_object.get_day_name() in ["Saturday", "Sunday"]:
+                    day_object.shifts["K1"] = None
+                    day_object.shifts["K2"] = None
+                else:
+                    day_object.shifts = copy.deepcopy(week_plan[0])
+                    day_object.rest = copy.deepcopy(week_plan[1])
+                    day_object.unavailable = copy.deepcopy(week_plan[2])
+                day_object.assign_rest()
+
+
 def assign_week(self) -> list:
     """
     Description: This function returns a list of 3 items containing a dictionary, a list and another list. The
@@ -46,40 +83,3 @@ def assign_week(self) -> list:
     rest_final = dict(local_rest)
     result = [local_weekly_plan, rest_final, self.unavailable]
     return result
-
-
-def assign_month_shifts(self, month_number: int, year_number: int):
-    """
-    Description: This function creates the plan for a whole month by calling the assign_week function for each week
-    in that month.
-
-    Args:
-        1. month_number - Type: int - The number of month e.g. 2 for February
-        2. year_number - Type: int - The year number e.g. 2024
-
-    Returns: -
-
-    """
-
-    if year_number not in self.calendars:
-        raise KeyError("The year entered does not exist.")
-    if month_number not in self.calendars[year_number].months:
-        raise KeyError("The month entered does not exist.")
-
-    weeks_of_month = calendar.monthcalendar(year_number, month_number)
-    for week in weeks_of_month:
-        week_plan = self.assign_week()
-        for day in week:
-            if day != 0:
-                day_object = self.access_day(day, month_number, year_number)
-                if day_object is None:
-                    # access_day already printed the error message, so we just return here
-                    return
-                if day_object.get_day_name() in ["Saturday", "Sunday"]:
-                    day_object.shifts["K1"] = None
-                    day_object.shifts["K2"] = None
-                else:
-                    day_object.shifts = copy.deepcopy(week_plan[0])
-                    day_object.rest = copy.deepcopy(week_plan[1])
-                    day_object.unavailable = copy.deepcopy(week_plan[2])
-                day_object.assign_rest()

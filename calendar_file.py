@@ -40,21 +40,63 @@ class Calendar:
         self.create_calendar_folder()
 
     def get_name(self):
+        """
+        Description: Getter method for the name attribute
+
+        Args: -
+
+        Returns: The name attribute of the Calendar object of type string
+
+        """
         return self.name
 
     def get_year(self):
+        """
+        Description: Getter method for the year attribute of a Calendar object
+
+        Args: -
+
+        Returns: The year attribute of the Calendar object of type integer
+
+        """
         return self.year
 
     def show_months(self):
+        """
+        Description: Function that shows the months of a Calendar object contained in the months attribute
+
+        Args: -
+
+        Returns: -
+
+        """
         for key in self.months:
             print(key)
 
     def populate_months(self):
+        """
+        Description: Function that assigns a Month instance object to each of the month numbers
+
+        Args: -
+
+        Returns: -
+
+        """
         months_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         for month in months_list:
             self.months[month] = Month(month, self.get_year())
 
     def create_calendar_folder(self):
+        """
+        Description: Function that creates a new folder for a Calendar object and populates it with additional month
+        folders and then each month folder with days csv files that represent the days of that month containing the
+        day's plan
+
+        Args: -
+
+        Returns: -
+
+        """
         # Define the folder name based on the year
         year_folder = f"{self.year}_Calendar"
 
