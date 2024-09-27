@@ -11,13 +11,13 @@ class Calendar:
         1. Constructor
         2. get_name
         3. get_year
-        4. populate_year_calendar
-        5. add_month
-        6. remove_month
+        4. show_months
+        5. populate_months
+        6. create_calendar_folder
 
     """
 
-    def __init__(self, year: int):
+    def __init__(self, year_number: int):
         """
         Description: Constructor of class Calendar. User inputs the year of the calendar in integer form. Attributes
         are assigned respectively. The attribute self.months is a dictionary containing string - month_objects pairs
@@ -30,11 +30,12 @@ class Calendar:
             3. months - Type: dictionary - A dictionary containing string - month_objects pairs
 
         Function calls:
-            1. populate_calendar_months()
+            1. populate_months()
+            2. create_calendar_folder()
 
         """
-        self.year = year
-        self.name = str(year) + " Calendar"
+        self.year = year_number
+        self.name = str(year_number) + " Calendar"
         self.months = dict()
         self.populate_months()
         self.create_calendar_folder()
@@ -90,7 +91,7 @@ class Calendar:
         """
         Description: Function that creates a new folder for a Calendar object and populates it with additional month
         folders and then each month folder with days csv files that represent the days of that month containing the
-        day's plan
+        day's plan.
 
         Args: -
 

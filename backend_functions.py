@@ -73,10 +73,9 @@ def populate_workers(self):
             availability = row[3]
             availability_status = availability.lower() == 'true'
             paramedic = Worker(name, function, availability_status)
-            if paramedic.get_availability_status():
-                self.paramedics[paramedic.get_name()] = paramedic
-            else:
+            if not paramedic.get_availability_status():
                 self.unavailable[paramedic.get_name()] = paramedic
+            self.paramedics[paramedic.get_name()] = paramedic
     with open('Assistants.txt', 'r') as file:
         reader2 = csv.reader(file)
         next(reader2)
@@ -86,10 +85,9 @@ def populate_workers(self):
             availability = row[3]
             availability_status = availability.lower() == 'true'
             assistant = Worker(name, function, availability_status)
-            if assistant.get_availability_status():
-                self.assistants[assistant.get_name()] = assistant
-            else:
+            if not assistant.get_availability_status():
                 self.unavailable[assistant.get_name()] = assistant
+            self.assistants[assistant.get_name()] = assistant
     self.show_workers()
 
 

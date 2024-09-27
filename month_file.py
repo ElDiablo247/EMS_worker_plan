@@ -11,7 +11,7 @@ class Month:
     the reason it is created like this is for modularisation purposes. Days contain shifts, months contain days etc.
 
     Methods:
-        1. Constructor
+        1. __init__ Constructor
         2. get_name
         3. get_year
         4. get_month_number
@@ -24,10 +24,10 @@ class Month:
 
     """
 
-    def __init__(self, month: int, year: int):
+    def __init__(self, month_number: int, year_number: int):
         """
-        Description: Constructor of Month object. month is the month number, for example for March it is 3 because it
-        is the third month. year is the year number for example 2024
+        Description: Constructor of Month object. month_number is the number, for example for March it is 3 because it
+        is the third month. year_number is the number of the year for example 2024
 
         Attributes:
 
@@ -44,13 +44,13 @@ class Month:
 
         """
 
-        self.year = year
-        self.month_number = month
+        self.year = year_number
+        self.month_number = month_number
         self.number_of_days = 0
-        self.assign_number_of_days()
         self.name = ""
-        self.assign_month_name()
         self.days = dict()
+        self.assign_number_of_days()
+        self.assign_month_name()
         self.create_days_of_month()
 
     def get_name(self):
@@ -65,15 +65,50 @@ class Month:
         return self.name
 
     def get_year(self):
+        """
+        Description: Getter method for the year in which this Month object belongs e.g. 2024
+
+        Args: -
+
+        Returns: The year of type int
+
+        """
         return self.year
 
     def get_month_number(self):
+        """
+        Description: Getter method for the number of this Month object e.g. if this Month is February then 2
+
+        Args: -
+
+        Returns: The number of this Month of type int
+
+        """
         return self.month_number
 
     def get_number_of_days(self):
+        """
+        Description: Getter method that returns the number of days that this Month object has e.g. 25
+
+        Args: -
+
+        Returns: An integer that represents the number of days that this Month object has
+
+        """
         return self.number_of_days
 
     def assign_month_name(self):
+        """
+        Description: Setter method that sets the name of this Month object. This function is called from the constructor
+        and internally further calls the function self.get_month_number() and based on the number of the month, it
+        sets the name too e.g. if self.get_month_number() returns 6 then this function sets the name to June because
+        it is the 6th month of a calendar.
+
+        Args: -
+
+        Returns: -
+
+        """
         months_dict = {
             1: "January",
             2: "February",
@@ -116,8 +151,25 @@ class Month:
         self.days = local
 
     def show_plan_by_day(self):
+        """
+        Description: A function that shows the whole plan of a Month object, by iteratting over each Day object and
+        accessing its plan.
+
+        Args: -
+
+        Returns: -
+
+        """
         for day, day_object in self.days.items():
             day_object.show_shifts()
 
     def update_month_backend(self):
+        """
+        Description: READ backend_functions.py file the docstring is there
+
+        Args: -
+
+        Returns: -
+
+        """
         return update_month_backend(self)

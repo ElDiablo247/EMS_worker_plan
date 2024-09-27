@@ -232,17 +232,6 @@ class Medie:
         else:
             raise KeyError("The name entered does not exist.")
 
-    def populate_workers(self):
-        """
-        Description: This function calls the function populate_workers from the backend_functions file.
-        Read the docstring there.
-
-        Args: -
-
-        Returns: populate_workers(self)
-
-        """
-        return populate_workers(self)
 
     def show_day_plan(self, day: int, month: int, year: int):
         """
@@ -459,6 +448,18 @@ class Medie:
 
     def assign_week(self) -> list:
         return assign_week(self)
+
+    def populate_workers(self):
+        """
+        Description: This function calls the function populate_workers from the backend_functions file.
+        Read the docstring there.
+
+        Args: -
+
+        Returns: populate_workers(self)
+
+        """
+        return populate_workers(self)
 
     def load_month_backend(self, month_number: int, year: int):
         return load_month_backend(self, month_number, year)
