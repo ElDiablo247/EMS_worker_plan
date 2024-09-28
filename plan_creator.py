@@ -58,8 +58,14 @@ def assign_week(self) -> list:
     local_weekly_plan = dict()
 
     # workers are loaded to local lists and then shuffled to be random
-    local_paramedics = list(self.paramedics.items())
-    local_assistants = list(self.assistants.items())
+    local_paramedics = []
+    local_assistants = []
+    for key, value in self.paramedics.items():
+        if value.availability_status:
+            local_paramedics.append((key, value))
+    for key, value in self.assistants.items():
+        if value.availability_status:
+            local_assistants.append((key, value))
     random.shuffle(local_paramedics)
     random.shuffle(local_assistants)
     local_shifts_nr = self.nr_of_shifts

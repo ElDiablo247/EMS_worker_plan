@@ -121,4 +121,3 @@ class Worker:
         else:
             print("Wrong input. Use '+' to add hours or '-' to subtract hours. Also only integers are accepted.")
         print("Current time worked for " + self.get_name() + " is " + self.get_working_time())
-
