@@ -1,3 +1,3 @@
 backend of paramedics must contain more columns with their avaailability, and hours
 
-in the month backend rest and unavailable must also be saved and loaded
+i definitely have to switch from txt files to csv files and change all the backend logic because its too complicated. Use pandas instead and csv files. Csv logic is easier for parsing and for telling python to handle changes like removing or adding workers or changing their data

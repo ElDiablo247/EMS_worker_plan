@@ -1,8 +1,8 @@
-K1: Sarah Williams, Ava Anderson, Olivia Miller
-K2: Michael Davis, Matthew Wilson, Christopher Taylor
-K3: Daniel Brown, Emma White
+K1: Daniel Brown, Isabella Harris, Olivia Miller
+K2: Raul Birta, Matthew Wilson, Sarah Williams
+K3: Michael Davis, Ava Anderson
 K4: Emily Johnson, James Jackson
-K5: Raul Birta, Isabella Harris
+K5: Christopher Taylor, Emma White
 
 Rest of workers: None
 Unavailable workers: Mathew Blade
